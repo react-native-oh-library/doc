@@ -1,3 +1,5 @@
+请先参考官方的RN+安卓的环境搭建文档[React Native Step Up](https://www.reactnative.cn/docs/environment-setup)；
+
 ### 安装node环境
 
 安装`docsify-cli`之前，我们需要安装`npm`包管理器，而安装了`node.js`就会自动安装`npm`

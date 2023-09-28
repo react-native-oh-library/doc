@@ -1,6 +1,6 @@
 <!-- _sidebar.md -->
 * [介绍](README)
-* [快速开始](contents/development)
+* [环境搭建](contents/environment)
 * [指南](contents/guide)
 * [配置](contents/configure)
 * [主题](contents/themes)

@@ -1,5 +1,5 @@
 <!-- _coverpage.md -->
-![logo](https://docsify.js.org/_media/icon.svg)
+![logo](./img/react.svg ':size=20%')
 
 # React Native OpenHarmony 三方库文档
 

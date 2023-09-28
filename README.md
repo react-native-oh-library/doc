@@ -1,34 +1,18 @@
 ## React-native
 
-网上关于动态文档生成工具有很多如：Docsify、 VuePress、Docute 、Hexo这些都是一些非常优秀的文档生成工具，本章主要介绍如何快速使用Docsify搭建一个快捷、轻量级的个人&团队文档。
+React Native 是一个使用React和应用平台的原生功能来构建 Android 和 iOS 应用的开源框架。通过 React Native，您可以使用 JavaScript 来访问移动平台的 API，以及使用 React 组件来描述 UI 的外观和行为：一系列可重用、可嵌套的代码。
 
-## 什么是Docsify？
+## 视图（Views）与移动开发
 
-一个神奇的文档网站生成器。docsify 可以快速帮你生成文档网站。不同于 GitBook、Hexo 的地方是它不会生成静态的 .html 文件，所有转换工作都是在运行时。如果你想要开始使用它，只需要创建一个 index.html 就可以开始编写文档。
+在 Android 、 iOS 和 harmony 开发中，一个视图是 UI 的基本组成部分：屏幕上的一个小矩形元素、可用于显示文本、图像或响应用户输入。甚至应用程序最小的视觉元素（例如一行文本或一个按钮）也都是各种视图。某些类型的视图可以包含其他视图。全部都是视图。
 
-## Docsify的特性
+在 harmony 开发中
 
-- 无需构建，写完文档直接发布
-- 容易使用并且轻量 (压缩后 ~21kB)
-- 智能的全文搜索
-- 提供多套主题
-- 丰富的 API
-- 支持 Emoji
-- 兼容 IE11
-- 支持服务端渲染 SSR ([示例](https://github.com/docsifyjs/docsify-ssr-demo))
+## React基础
 
-## 轻量&完善的Docsify模板
+请参考[React Native 中文网](https://www.reactnative.cn/docs/intro-react)来学习最基础的使用。
 
-该模板为一个简洁，并且完善的Docsify模板基本上可以满足百分之八十多的团队需求，你可以按照文章中的Docsify环境配置教程把运行Docsify所需要的环境配置起来，通过命令即可查看效果（配置环境顺利的话只要十来分钟）。
+## 开发工具
 
-
-
-#### 阅读文档推荐
-
-官网文档：https://docsify.js.org/#/quickstart
-
-博客文档：https://blog.csdn.net/liyou123456789/article/details/124504727
-
-CDN官网：https://www.jsdelivr.com/
-
-演示地址：https://librarycodes.gitee.io/docsify-plus
+- VS Code
+- DevEco Studio 用于鸿蒙原生代码的开发；

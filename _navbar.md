@@ -1,18 +1,16 @@
 <!-- _navbar.md -->
 
-* 链接到我
-  * [博客园地址](https://www.cnblogs.com/YushinFukuhara/)
-  * [Github地址](https://github.com/shiming-git)
-  * [Gitee地址](https://gitee.com/librarycodes)
+* 相关链接
+  * [RNOH源码地址](https://github.com/react-native-openharmony/rnoh)
+  * [Gitee地址](https://gitee.com/librarycodes/docsify-plus)
 
 
 * 友情链接
   * [Docsify](https://docsify.js.org/#/)
-  * [博客园](https://www.cnblogs.com)
-  * [CDN](https://www.jsdelivr.com/)
+  * [OpenHarmony应用开发](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/application-dev-guide.md/)
 
 * 语言
   * [中文](/)
-  * [En](/zh-en/)
+  * [En(待完善)](/zh-en/)
 
 	

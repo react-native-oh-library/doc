@@ -9,4 +9,4 @@
 
 [Gitee](https://gitee.com/react-native-oh-library/docs)
 [GitHub（待完善）]()
-[快速开始](README.md)
+[快速开始](/zh-cn/README.md)

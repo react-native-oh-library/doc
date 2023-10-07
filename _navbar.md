@@ -10,7 +10,7 @@
   * [OpenHarmony应用开发](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/application-dev-guide.md/)
 
 * 语言
-  * [中文](/)
+  * [中文](/zh-cn/)
   * [En(待完善)](/zh-en/)
 
 	

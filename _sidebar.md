@@ -6,9 +6,11 @@
     - [RN三方库基础](zh-cn/third-party.md)
 
 - 环境搭建
-    - [环境搭建](zh-cn/environment)
+    - [搭建开发环境](zh-cn/environment.md)
 
 - 新架构迁移指南
+    - [新架构介绍](zh-cn/new-architecture.md)
+    - [TurboModule]
 - 鸿蒙化与使用指南
 - 其他
 

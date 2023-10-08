@@ -16,5 +16,10 @@
 - 鸿蒙化与使用指南
     - [C++ 脚手架代码](zh-cn/cpp.md)
     - [原生实现](zh-cn/native.md)
+
+- 发布
+- [本地打包](zh-cn/tgz.md)
+- [发布三方库到github私仓](zh-cn/github.md)
+- [发布三方库到npm](zh-cn/npm.md)
 - 其他
 

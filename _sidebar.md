@@ -14,7 +14,7 @@
     - [Fabric组件](zh-cn/fabric.md)
     - [迁移三方库到新架构](zh-cn/migration.md)
 - 鸿蒙化与使用指南
-    - [C++胶水代码]()
-    - [原生实现]()
+    - [C++ 脚手架代码](zh-cn/cpp.md)
+    - [原生实现](zh-cn/native.md)
 - 其他
 

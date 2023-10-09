@@ -21,6 +21,7 @@
     - [本地打包三方库](zh-cn/tgz.md)
     - [发布三方库到github私仓](zh-cn/github.md)
     - [发布三方库到npm](zh-cn/npm.md)
+
 - 其他
-    -[autolink](zh-cn/autolink.md)
+    - [AutoLink](zh-cn/autolink.md)
 

@@ -2,6 +2,8 @@
 
 !> 迁移到新框架分为两步：JS代码迁移和原生代码迁移。这里只介绍JS代码的迁移，Android 和 iOS 原生代码的迁移与鸿蒙化无关，按需自行学习。
 
+> tags: 可通过社区查找参考代码，在仓库的 pull request 搜索 new architecture  或者 Fabric/Turbo Module 以查看社区里迁移中的代码，进行参考。
+
 ## 如何判断三方库是否为新框架
 
 主要从三个方面来判断：

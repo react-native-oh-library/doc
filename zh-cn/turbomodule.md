@@ -422,3 +422,72 @@ public class CalculatorPackage extends TurboReactPackage {
 这就是 Android 平台原生代码的最后一部分，它定义了 TurboReactPackage 对象，这个对象将用于 App 的模块加载。
 
 #### Harmony
+
+### 将 Turbo Native Module 添加到 App
+
+#### Shared
+
+首先，需要将包含模块的 NPM 包添加到 App。可以使用以下命令执行此操作：
+
+```bash
+cd MyApp
+yarn add ../RTNCalculator
+```
+
+此命令会将 RTNCalculator 模块添加到 App 内的 node_modules 目录。
+
+#### Android
+
+在配置 Android 之前，您需要先开启新架构：
+
+1. 打开 android/gradle.properties；
+2. 滑到文件底部，将 newArchEnabled 的值从 false 修改为 true。
+
+#### Harmony
+
+#### JavaScript
+
+以下是一个在 App.js 中调用 add 方法的例子：
+
+<!-- tabs:start -->
+#### **App.js**
+```js
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+import React from 'react';
+import {useState} from 'react';
+import type {Node} from 'react';
+import {
+  SafeAreaView,
+  StatusBar,
+  Text,
+  Button,
+} from 'react-native';
+import RTNCalculator from 'rtn-calculator/js/NativeCalculator.js';
+
+const App: () => Node = () => {
+  const [result, setResult] = useState<number | null>(null);
+  return (
+    <SafeAreaView>
+      <StatusBar barStyle={'dark-content'} />
+      <Text style={{marginLeft: 20, marginTop: 20}}>
+        3+7={result ?? '??'}
+      </Text>
+      <Button
+        title="Compute"
+        onPress={async () => {
+          const value = await RTNCalculator.add(3, 7);
+          setResult(value);
+        }}
+      />
+    </SafeAreaView>
+  );
+};
+export default App;
+```
+<!-- tabs:end -->

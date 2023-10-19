@@ -23,5 +23,6 @@
     - [发布三方库到npm](zh-cn/npm.md)
 
 - 其他
+    - [常见问题Q&A](zh-cn/qa.md)
     - [AutoLink](zh-cn/autolink.md)
 

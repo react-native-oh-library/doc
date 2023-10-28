@@ -37,6 +37,49 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
 
 #### Harmony
 
+Harmony 平台暂时还没有 Codegen，所以我们需要手动运行 Android 的 Codegen，然后把生成的代码复制过来使用。
+
+!> 请务必先把 Android 的 Codegen 配置好再执行以下操作
+
+首先我们需要一个 React-Native App来执行 Codegen，假设 App 的目录是和 当前目录平级的 `MyApp`，执行以下命令来创建一个 Gradle 任务来执行 Codegen。
+
+!> 在运行 Codegen 之前，您需要在 Android 中的 App 启动新架构。您可以通过修改 gradle.properties 文件中的 newArchEnabled 属性，将 false 改为 true。
+
+```bash
+cd MyApp
+yarn add ../RTNCalculator
+cd android
+./gradlew generateCodegenArtifactsFromSchema
+```
+
+生成后的代码保存在 `MyApp/node_modules/rtn-calculator/android/build/generated/source/codegen` 目录，并呈以下结构：
+
+```md
+codegen
+├── java
+│   └── com
+│       └── RTNCalculator
+│           └── NativeCalculatorSpec.java
+├── jni
+│   ├── Android.mk
+│   ├── RTNCalculator-generated.cpp
+│   ├── RTNCalculator.h
+│   └── react
+│       └── renderer
+│           └── components
+│               └── RTNCalculator
+│                   ├── ComponentDescriptors.h
+│                   ├── EventEmitters.cpp
+│                   ├── EventEmitters.h
+│                   ├── Props.cpp
+│                   ├── Props.h
+│                   ├── ShadowNodes.cpp
+│                   └── ShadowNodes.h
+└── schema.json
+```
+
+`RTNCalculator` 目录下的代码是 Harmony 需要的。将这些代码复制到 `harmony/rtn-calculator/src/main/cpp` 文件夹下，并在同级目录创建
+
 ### 3. 原生代码
 
 #### Android

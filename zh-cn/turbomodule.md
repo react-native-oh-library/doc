@@ -85,9 +85,11 @@ export default (TurboModuleRegistry.get<Spec>(
 最后，调用 `TurboModuleRegistry.get` 并传入模块名，它将在 Turbo Native Module 可用的时候进行加载。
 
 ### 3. Codegen 配置
-接下来，需要为 Codegen 和自动链接添加一些配置。
+接下来，需要为 Codegen 和自动链接添加一些配置。Codegen的作用是生成 C++ 脚手架代码，负责串联 JS 和原生侧。
 
-有一些配置文件在 Android/iOS/Harmony 平台是通用的，而有的仅能在某一平台使用。
+有一些配置文件在 Android/iOS 平台是通用的，而有的仅能在某一平台使用。
+
+Harmony 平台暂时不支持 Codegen，TurboModule 的 C++ 代码需要自行编写。
 
 #### Shared
 
@@ -112,7 +114,7 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "keywords": ["react-native", "ios", "android"],
+  "keywords": ["react-native", "ios", "android", "harmony"],
   "repository": "https://github.com/<your_github_handle>/rtn-calculator",
   "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
   "license": "MIT",
@@ -257,48 +259,110 @@ Codegen 会在 App 编译的时候自动运行。
 
 #### Harmony
 
-Harmony 平台暂时还没有 Codegen，所以我们需要手动运行 Android 的 Codegen，然后把生成的代码复制过来使用。
+因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
 
-!> 请务必先把 Android 的 Codegen 配置好再执行以下操作
-
-首先我们需要一个 React-Native App来执行 Codegen，假设 App 的目录是和 当前目录平级的 `MyApp`，执行以下命令来创建一个 Gradle 任务来执行 Codegen。
-
-!> 在运行 Codegen 之前，您需要在 Android 中的 App 启动新架构。您可以通过修改 gradle.properties 文件中的 newArchEnabled 属性，将 false 改为 true。
-
-```bash
-cd MyApp
-yarn add ../RTNCalculator
-cd android
-./gradlew generateCodegenArtifactsFromSchema
-```
-
-生成后的代码保存在 `MyApp/node_modules/rtn-calculator/android/build/generated/source/codegen` 目录，并呈以下结构：
+ 在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`RTNCalculatorTurboModule.h`，`RTNCalculatorTurboModule.cpp`。
 
 ```md
-codegen
-├── java
-│   └── com
-│       └── RTNCalculator
-│           └── NativeCalculatorSpec.java
-├── jni
-│   ├── Android.mk
-│   ├── RTNCalculator-generated.cpp
-│   ├── RTNCalculator.h
-│   └── react
-│       └── renderer
-│           └── components
-│               └── RTNCalculator
-│                   ├── ComponentDescriptors.h
-│                   ├── EventEmitters.cpp
-│                   ├── EventEmitters.h
-│                   ├── Props.cpp
-│                   ├── Props.h
-│                   ├── ShadowNodes.cpp
-│                   └── ShadowNodes.h
-└── schema.json
+harmony
+└── rtn-calculator
+    ├── src
+    │   └── main
+    │       ├── cpp
+    │       │   ├── CalculatorPacakge.h
+    │       │   ├── CMakeLists.txt
+    │       │   ├── RTNCalculatorTurboModule.cpp
+    │       │   └── RTNCalculatorTurboModule.h
+    │       ├──ets
+    │       └── modules.json5         
+    ├── build-profile.json5
+    ├── hvigorfile.ts
+    ├── index.ets
+    ├── oh-package.json5
+    └── ShadowNodes.h
 ```
+<!-- tabs:start -->
+#### **CMakeLists.txt**
+```cmake
+# the minimum version of CMake
+cmake_minimum_required(VERSION 3.13)
+set(CMAKE_VERBOSE_MAKEFILE on)
 
-`codegen/jni/react/renderer/components/RTNCalculator` 下的代码是 Harmony 需要的。
+file(GLOB rnoh_calculator_SRC CONFIGURE_DEPENDS *.cpp)
+add_library(rnoh_calculator SHARED ${rnoh_calculator_SRC})
+target_include_directories(rnoh_calculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(rnoh_calculator PUBLIC rnoh)
+```
+<!-- tabs:end -->
+
+<!-- tabs:start -->
+#### **RTNCalculatorTurboModule.h**
+```cpp
+# pragma once
+# include "RNOH/ArkTSTurboModule.h"
+
+namespace rnoh {
+  class JSI_EXPORT RTNCalculatorTurboModule : public ArkTSTurboModule {
+    public:
+      RTNCalculatorTurboModule(const ArkTSTurboModule::Context ctx, const std::string name);
+  };
+} // namespace rnoh
+```
+<!-- tabs:end -->
+
+<!-- tabs:start -->
+#### **RTNCalculatorTurboModule.cpp**
+```cpp
+#include "RTNCalculatorTurboModule.h"
+#include "RNOH/ArkTSTurboModule.h"
+
+using namespace rnoh;
+using namespace facebook;
+
+static jsi::Value __hostFunction_RTNCalculatorTurboModule_add(jsi::Runtime &rt, react::TurboModule, const jsi::Value *args, size_t count) {
+  return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "add", args, count);
+}
+
+RTNCalculatorTurboModule::RTNCalculatorTurboModule(const ArkTSTurboModule::Context ctx, const std::string name) : ArkTSTurboModule(ctx, name) {
+  methodMap_["add"] = MethodMetadata{2, __hostFunction_RTNCalculatorTurboModule_add};
+}
+```
+<!-- tabs:end -->
+
+
+通过 `RNOH/Package.h` 来导出 CalculatorPackage
+<!-- tabs:start -->
+#### **CalculatorPacakge.h**
+```cpp
+#include "RNOH/Package.h"
+#include "RTNCalculatorTurboModule.h"
+
+using namespace rnoh;
+using namespace facebook;
+class NativeRTNCalculatorFactoryDelegate : public TurboModuleFactoryDelegate {
+  public:
+    SharedTurboModule createTurboModule(Context ctx, const std::string &name) const override {
+      if (name == "RTNCalculator") {
+        return std::make_shared<RTNCalculatorTurboModule>(ctx, name);
+      }
+      return nullptr;
+    }
+}
+
+namespace rnoh {
+  class CalculatorPackage : public Package {
+    public:
+      CalculatorPackage(Package::Context ctx) : Package(ctx) {}
+      std::unique_ptr<TurboModuleFactoryDelegate> createTurboModuleFactoryDelegate() override {
+        return std::make_unique<NativeRTNCalculatorFactoryDelegate>();
+      }
+  };
+} // namespace rnoh
+```
+<!-- tabs:end -->
+
+
+
 
 ### 4. 原生代码
 
@@ -422,6 +486,7 @@ public class CalculatorPackage extends TurboReactPackage {
 这就是 Android 平台原生代码的最后一部分，它定义了 TurboReactPackage 对象，这个对象将用于 App 的模块加载。
 
 #### Harmony
+
 
 ### 将 Turbo Native Module 添加到 App
 

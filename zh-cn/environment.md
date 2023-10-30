@@ -63,7 +63,20 @@ DevEco Studio 版本：4.0.3.501
 
 拉取[rnoh](https://github.com/react-native-openharmony/rnoh)项目中的 `third_party` 分支。
 
-### 运行 `tester` 项目
+## 编译并运行 React Native 应用
+
+### Android
+
+确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行 yarn android 或者 yarn react-native run-android：
+
+```bash
+cd tester
+yarn android
+# 或者
+yarn react-native run-android
+```
+
+### Harmony
 
 - 安装所需依赖：
 
@@ -73,7 +86,7 @@ npm run preinstall
 npm i
 ```
 
-打开 DevEco Studio，点击右上方出现的“Sync”
+打开 DevEco Studio，点击右上方出现的 "Sync"
 
 - 打包：
 

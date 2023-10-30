@@ -257,7 +257,7 @@ Codegen 会在 App 编译的时候自动运行。
 
 #### Harmony
 
-因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
+!> 待完善能力：因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
 
  在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`RTNCalculatorTurboModule.h`，`RTNCalculatorTurboModule.cpp`。
 
@@ -616,7 +616,7 @@ export { harTasks } from '@ohos/hvigor-ohos-plugin';
 ```
 <!-- tabs:end -->
 
-### 将 Turbo Native Module 添加到 App
+### 5. 将 Turbo Native Module 添加到 App
 
 #### Shared
 
@@ -638,7 +638,7 @@ yarn add ../RTNCalculator
 
 #### Harmony
 
-Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
+!> 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 React-Native 项目里的鸿蒙工程 `harmony`
 

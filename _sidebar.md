@@ -24,5 +24,6 @@
 
 - 其他
     - [常见问题Q&A](zh-cn/qa.md)
+    - [开源管理](zh-cn/open-source.md)
     - [AutoLink](zh-cn/autolink.md)
 

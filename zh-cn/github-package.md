@@ -1,4 +1,4 @@
-# 发布三方库到github私仓
+# 发布三方库到Github Packages
 
 !> 请确保本地可以成功打包tgz再来发布
 
@@ -8,7 +8,7 @@
 
 ## 创建 Github 个人访问令牌（personal access token）
 
-该步骤可以直接跳过，目前 react-native-oh-library 组织共用一个访问令牌。
+该步骤可以直接跳过，目前 react-native-oh-library 组织共用一个访问令牌，请向组织管理员问取访问令牌。
 
 ## 使用 Github Registry 使用 NPM 进行身份验证
 
@@ -81,3 +81,6 @@ npm publish
 },
 ```
 <!-- tabs:end -->
+
+
+!< 若有疑问请参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。

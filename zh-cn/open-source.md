@@ -104,7 +104,6 @@ RNOH的打包工具会识别出 `node_modules` 下第一级目录的所有RNOH�
 
 ### 将三方库的私有NPM包托管到github
 
-请查阅 [发布三方库到github私仓](./github.md)，也可参考 [react-native-slider
-](https://github.com/react-native-oh-library/react-native-slider)。
+请查阅 [发布三方库到Github Packages](./github-package.md)，也可参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
 
 

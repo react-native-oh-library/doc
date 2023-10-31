@@ -19,8 +19,8 @@
 
 - 发布
     - [本地打包三方库](zh-cn/tgz.md)
-    - [发布三方库到github私仓](zh-cn/github.md)
-    - [发布三方库到npm](zh-cn/npm.md)
+    - [发布三方库到Github Packages](zh-cn/github-package.md)
+    - [发布三方库到NPM](zh-cn/npm.md)
 
 - 其他
     - [常见问题Q&A](zh-cn/qa.md)

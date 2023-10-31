@@ -44,10 +44,10 @@ release描述按以下格式：
 3. ...
 
 [Version]:
-RNOH: 0.72.7
-DevEco Studio: 4.0.3.601
-OH SDK: 4.0.10.11
-ROM: 4.0.0.65(SP4C00E70R1P12log)
+- RNOH: 0.72.7
+- DevEco Studio: 4.0.3.601
+- OH SDK: 4.0.10.11
+- ROM: 4.0.0.65(SP4C00E70R1P12log)
 ```
 
 ![tag&release](../img/tag&release.png)

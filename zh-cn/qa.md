@@ -30,6 +30,21 @@ hilog -Q domainoff
 hilog -Q pidoff
 ```
 
+### 1.3 如何加快打bundle的速度？
+
+本地调试可以注释掉 `node_modules/@rnoh/react-native-harmony-cli/dist/commands/bundle-harmony.js` 文件下的如下两行代码来提高打bundle的速度：
+
+```js
+const assets = yield retrieveAssetsData(metroConfig, buildOptions);
+copyAssets(assets, args.assetsDest);
+```
+
+### 1.4 bob-build或使用babel时 Platform.OS 报错：'"android" | "windows" | "macos" | "web"' and '"harmony"' have no overlap.
+
+将 node_modules 的 `react-native/Libraries/Utilities/Platform.d.ts` 替换成 react-native-harmony 包里 `react-native-harmony/Libraries/Utilities/Platform.d.ts`。
+
+
+
 
 ## 2. 环境配置相关
 

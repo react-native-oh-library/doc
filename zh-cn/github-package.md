@@ -10,13 +10,13 @@
 
 该步骤可以直接跳过，目前 react-native-oh-library 组织共用一个访问令牌，请向组织管理员问取访问令牌。
 
-## 使用 Github Registry 使用 NPM 进行身份验证
+## 方法一：使用 Github Registry 使用 NPM 进行身份验证
 
 要发布 npm 包，需要通过 Github 包注册表对 npm 进行身份验证。有两种方法可以做到这一点：
 1. 使用.npmrc文件进行身份验证
 2. 使用命令行
 
-### 使用 .npmrc 验证（推荐）
+### 方法二：使用 .npmrc 验证（推荐）
 在三方库目录下新建 ~/.npmrc 文件（如果不存在）并添加下行，将 TOKEN 替换为你的 personal access token。
 
 ```

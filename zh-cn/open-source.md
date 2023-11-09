@@ -29,17 +29,21 @@
 
 ### 代码格式检查
 
-请查看 [代码格式检查](./codelint.md) 章节
+请查看 [代码格式检查](../zh-cn/codelint.md) 章节
 
 ### Tags and Releases
 
-Tag 名称、Release 名称一致:
+按以下步骤操作：
+
+1. Tag 名称、Release 名称一致:
 
 > x.x.x-y.y.y
 
 其中x.x.x为基版本，即基于原库哪一个版本；y.y.y为鸿蒙化过程中自行定义的临时版本号。
 
-release描述按以下格式：
+2. Target分支 选择默认分支 harmony（请确保变更已通过测试、代码检查和合入了默认分支）
+
+3. Release 描述按以下格式：
 
 ```md
 [Fixes]:
@@ -47,12 +51,14 @@ release描述按以下格式：
 2. 问题修复2
 3. ...
 
-[Version]:
-- RNOH: 0.72.7
+[Version Info]:
+- RNOH: 0.72.10
 - DevEco Studio: 4.0.3.601
 - OH SDK: 4.0.10.11
 - ROM: 4.0.0.65(SP4C00E70R1P12log)
 ```
+
+4. 需要上传本地打包的tgz文件
 
 ![tag&release](../img/tag&release.png)
 
@@ -108,6 +114,6 @@ RNOH的打包工具会识别出 `node_modules` 下第一级目录的所有RNOH�
 
 ### 将三方库的私有NPM包托管到github
 
-请查阅 [发布三方库到Github Packages](./github-package.md)，也可参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
+请查阅 [发布三方库到Github Packages](../zh-cn/github-package.md)，也可参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
 
 

@@ -11,7 +11,7 @@ Turbo Modules是升级版的Native Modules，是基于JSI开发的一套JS与Nat
 创建一个 Turbo Native Module 分为以下步骤：
 
 1. 声明 JavaScript 接口类型；
-2. 配置模块以支持 Codegen 自动生成脚手架代码；
+2. 编写脚手架代码（Android 和 iOS 平台可以通过 Codegen 生成）；
 3. 编写原生代码完成模块实现。
 
 接下来会创建一个简单的名为 `RTNCalculator` 的 TurboModule 作为示例。
@@ -259,7 +259,7 @@ Codegen 会在 App 编译的时候自动运行。
 
 !> 待完善能力：因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
 
- 在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`RTNCalculatorTurboModule.h`，`RTNCalculatorTurboModule.cpp`。
+ 在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`CalculatorTurboModule.h`，`CalculatorTurboModule.cpp`。
 
 ```md
 harmony
@@ -269,8 +269,8 @@ harmony
     │       ├── cpp
     │       │   ├── CalculatorPacakge.h
     │       │   ├── CMakeLists.txt
-    │       │   ├── RTNCalculatorTurboModule.cpp
-    │       │   └── RTNCalculatorTurboModule.h
+    │       │   ├── CalculatorTurboModule.cpp
+    │       │   └── CalculatorTurboModule.h
     │       ├──ets
     │       └── modules.json5         
     ├── build-profile.json5
@@ -294,7 +294,7 @@ target_link_libraries(rnoh_calculator PUBLIC rnoh)
 <!-- tabs:end -->
 
 <!-- tabs:start -->
-#### **RTNCalculatorTurboModule.h**
+#### **CalculatorTurboModule.h**
 ```cpp
 # pragma once
 # include "RNOH/ArkTSTurboModule.h"
@@ -309,7 +309,7 @@ namespace rnoh {
 <!-- tabs:end -->
 
 <!-- tabs:start -->
-#### **RTNCalculatorTurboModule.cpp**
+#### **CalculatorTurboModule.cpp**
 ```cpp
 #include "RTNCalculatorTurboModule.h"
 #include "RNOH/ArkTSTurboModule.h"
@@ -358,9 +358,6 @@ namespace rnoh {
 } // namespace rnoh
 ```
 <!-- tabs:end -->
-
-
-
 
 ### 4. 原生代码
 
@@ -501,8 +498,8 @@ harmony
     │       ├── cpp
     │       │   ├── CalculatorPacakge.h
     │       │   ├── CMakeLists.txt
-    │       │   ├── RTNCalculatorTurboModule.cpp
-    │       │   └── RTNCalculatorTurboModule.h
+    │       │   ├── CalculatorTurboModule.cpp
+    │       │   └── CalculatorTurboModule.h
     │       ├──ets
     │       │   ├── CalculatorModule.ts
     │       │   └── CalculatorPackage.ts
@@ -516,7 +513,7 @@ harmony
 
 创建 `CalculatorModule.ts`
 
- <!-- tabs:start -->
+<!-- tabs:start -->
 #### **CalculatorModule.ts**
 ```ts
 import { TurboModule } from 'rnoh/ts';

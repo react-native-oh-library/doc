@@ -22,10 +22,14 @@
 
 发布步骤：
 
-1. 确保已通过自检测试；
+1. 确保已通过自检测试，并完成代码格式检查；
 2. 将变更合入 `harmony` 分支；
 3. 发布新的 Tag 和 Release（github操作）；
 4. 发布新的 NPM Package（本地操作）。
+
+### 代码格式检查
+
+请查看 [代码格式检查](./codelint.md) 章节
 
 ### Tags and Releases
 

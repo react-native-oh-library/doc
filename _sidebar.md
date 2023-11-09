@@ -1,6 +1,5 @@
 <!-- _sidebar.md -->
 - 入门基础
-
     - [简介](zh-cn/README.md)
     - [RN基础](zh-cn/base.md)
     - [RN三方库](zh-cn/third-party.md)
@@ -27,4 +26,3 @@
 - 其他
     - [常见问题Q&A](zh-cn/qa.md)
     - [AutoLink](zh-cn/autolink.md)
-

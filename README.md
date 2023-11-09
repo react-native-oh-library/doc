@@ -11,7 +11,6 @@
 ## 目录
 
 - 入门基础
-
     - [简介](zh-cn/README.md)
     - [RN基础](zh-cn/base.md)
     - [RN三方库](zh-cn/third-party.md)
@@ -29,12 +28,12 @@
     - [原生实现](zh-cn/native.md)
 
 - 发布
+    - [代码格式检查](zh-cn/codelint.md)
+    - [开源管理](zh-cn/open-source.md)
     - [本地打包三方库](zh-cn/tgz.md)
     - [发布三方库到Github Packages](zh-cn/github-package.md)
     - [发布三方库到NPM](zh-cn/npm.md)
 
 - 其他
     - [常见问题Q&A](zh-cn/qa.md)
-    - [开源管理](zh-cn/open-source.md)
     - [AutoLink](zh-cn/autolink.md)
-

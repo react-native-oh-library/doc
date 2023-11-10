@@ -11,7 +11,7 @@
     - [新架构介绍](zh-cn/new-architecture.md)
     - [TurboModules](zh-cn/turbomodule.md)
     - [Fabric组件](zh-cn/fabric.md)
-    - [迁移三方库到新架构](zh-cn/migration.md)
+    - [迁移三方库到新架构]()
 - 鸿蒙化与使用指南
     - [C++ 脚手架代码](zh-cn/cpp.md)
     - [原生实现](zh-cn/native.md)

@@ -94,4 +94,4 @@ npm publish
 
 <!-- tabs:end -->
 
-!< 若有疑问请参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
+> [!tip] 若有疑问请参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。

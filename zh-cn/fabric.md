@@ -46,12 +46,13 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
 #### **flow**
 
 RTNCenteredTextNativeComponent.js
+
 ```js
 // @flow strict-local
 
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
-import type {HostComponent} from 'react-native';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type { ViewProps } from "react-native/Libraries/Components/View/ViewPropTypes";
+import type { HostComponent } from "react-native";
+import codegenNativeComponent from "react-native/Libraries/Utilities/codegenNativeComponent";
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
@@ -60,17 +61,18 @@ type NativeProps = $ReadOnly<{|
 |}>;
 
 export default (codegenNativeComponent<NativeProps>(
-   'RTNCenteredText',
+  "RTNCenteredText"
 ): HostComponent<NativeProps>);
 ```
 
 #### **typescript**
 
 RTNCenteredTextNativeComponent.ts
+
 ```ts
-import type {ViewProps} from 'ViewPropTypes';
-import type {HostComponent} from 'react-native';
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type { ViewProps } from "ViewPropTypes";
+import type { HostComponent } from "react-native";
+import codegenNativeComponent from "react-native/Libraries/Utilities/codegenNativeComponent";
 
 export interface NativeProps extends ViewProps {
   text?: string;
@@ -78,16 +80,17 @@ export interface NativeProps extends ViewProps {
 }
 
 export default codegenNativeComponent<NativeProps>(
-  'RTNCenteredText',
+  "RTNCenteredText"
 ) as HostComponent<NativeProps>;
 ```
+
 <!-- tabs:end -->
 
 在声明文件的顶部导入了一些内容。以下是开发 Fabric 组件必须要导入的内容：
 
 - `HostComponent` 类型: 导出的组件需要与这个类型保持一致；
 - `codegenNativeComponent` 函数：负责将组件注册到 JavaScript 运行时。
-声明文件的中间部分包含了组件的 props。Props（"properties" 的缩写）是用于自定义 React 组件的参数信息。在本例中，需要控制组件的 text 属性。
+  声明文件的中间部分包含了组件的 props。Props（"properties" 的缩写）是用于自定义 React 组件的参数信息。在本例中，需要控制组件的 text 属性。
 
 在声明文件的最后部分，导出了泛型函数 `codegenNativeComponent` 的返回值，此函数需要传递组件的名称。
 
@@ -157,12 +160,12 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 android
 ├── build.gradle
 └── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncenteredtext
-                    └── RTNCenteredTextPackage.java
+└── main
+├── AndroidManifest.xml
+└── java
+└── com
+└── rtncenteredtext
+└── RTNCenteredTextPackage.java
 ```
 
 首先，在 `android` 目录创建 `build.gradle` 文件，并配置以下内容：
@@ -170,7 +173,9 @@ android
 **build.gradle**
 
 <!-- tabs:start -->
+
 #### **build.gradle**
+
 ```gradle
 buildscript {
   ext.safeExtGet = {prop, fallback ->
@@ -211,17 +216,21 @@ dependencies {
   implementation 'com.facebook.react:react-native:+'
 }
 ```
+
 <!-- tabs:end -->
 
 其次，创建 `android/src/main` 目录，然后在这个目录内创建 `AndroidManifest.xml` 文件，并编写以下代码：
 
 <!-- tabs:start -->
+
 #### **AndroidManifest.xml**
+
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.rtncenteredtext">
 </manifest>
 ```
+
 <!-- tabs:end -->
 
 这个 manifest 文件的用途是声明您开发的模块的 Java 包
@@ -233,7 +242,9 @@ dependencies {
 **RTNCenteredTextPackage.java**
 
 <!-- tabs:start -->
+
 #### **RTNCenteredTextPackage.java**
+
 ```java
 package com.rtncenteredtext;
 
@@ -259,22 +270,22 @@ public class RTNCenteredTextPackage implements ReactPackage {
 
 }
 ```
+
 <!-- tabs:end -->
 
 ReactPackage 接口的用途是让 React Native 为使用 App 中的 ViewManager 和 Native Modules，识别出哪些原生类需要在第三方库里导出。
 
 Codegen 会在 App 编译的时候自动运行。
 
-
 #### Harmony
 
 Harmony 平台暂时还没有 Codegen，所以我们需要手动运行 Android 的 Codegen，然后把生成的代码复制过来使用。
 
-!> 请务必先把 Android 的 Codegen 配置好再执行以下操作
+> [!WARNING] 请务必先把 Android 的 Codegen 配置好再执行以下操作
 
-首先我们需要一个 React-Native App来执行 Codegen，假设 App 的目录是和 当前目录平级的 `MyApp`，执行以下命令来创建一个 Gradle 任务来执行 Codegen。
+首先我们需要一个 React-Native App 来执行 Codegen，假设 App 的目录是和 当前目录平级的 `MyApp`，执行以下命令来创建一个 Gradle 任务来执行 Codegen。
 
-!> 在运行 Codegen 之前，您需要在 Android 中的 App 启动新架构。您可以通过修改 gradle.properties 文件中的 newArchEnabled 属性，将 false 改为 true。
+> [!tip] 在运行 Codegen 之前，您需要在 Android 中的 App 启动新架构。您可以通过修改 gradle.properties 文件中的 newArchEnabled 属性，将 false 改为 true。
 
 ```bash
 cd MyApp
@@ -288,28 +299,28 @@ cd android
 ```md
 codegen
 ├── java
-│   └── com
-│       └── facebook
-│           └── react
-│               └── viewmanagers
-│                   ├── RTNCenteredTextManagerDelegate.java
-│                   └── RTNCenteredTextManagerInterface.java
+│ └── com
+│ └── facebook
+│ └── react
+│ └── viewmanagers
+│ ├── RTNCenteredTextManagerDelegate.java
+│ └── RTNCenteredTextManagerInterface.java
 ├── jni
-│   ├── Android.mk
-│   ├── CMakeLists.txt
-│   ├── RTNCenteredText-generated.cpp
-│   ├── RTNCenteredText.h
-│   └── react
-│       └── renderer
-│           └── components
-│               └── RTNCenteredText
-│                   ├── ComponentDescriptors.h
-│                   ├── EventEmitters.cpp
-│                   ├── EventEmitters.h
-│                   ├── Props.cpp
-│                   ├── Props.h
-│                   ├── ShadowNodes.cpp
-│                   └── ShadowNodes.h
+│ ├── Android.mk
+│ ├── CMakeLists.txt
+│ ├── RTNCenteredText-generated.cpp
+│ ├── RTNCenteredText.h
+│ └── react
+│ └── renderer
+│ └── components
+│ └── RTNCenteredText
+│ ├── ComponentDescriptors.h
+│ ├── EventEmitters.cpp
+│ ├── EventEmitters.h
+│ ├── Props.cpp
+│ ├── Props.h
+│ ├── ShadowNodes.cpp
+│ └── ShadowNodes.h
 └── schema.json
 ```
 
@@ -329,32 +340,34 @@ codegen
 ```md
 harmony
 └── rtn-centered-text
-    ├── src
-    │   └── main
-    │       ├── cpp
-    │       │   ├── ComponentDescriptors.h
-    │       │   ├── EventEmitters.cpp
-    │       │   ├── EventEmitters.h
-    │       │   ├── Props.cpp
-    │       │   ├── Props.h
-    │       │   ├── ShadowNodes.cpp
-    │       │   ├── ShadowNodes.h
-    │       │   ├── CenteredTextJSIBinder.h
-    │       │   ├── CenteredTextNapiBinder.h
-    │       │   └── CenteredTextPackage.h
-    │       ├──ets
-    │       └── modules.json5         
-    ├── build-profile.json5
-    ├── hvigorfile.ts
-    ├── index.ets
-    ├── oh-package.json5
-    └── ts.ts
+├── src
+│ └── main
+│ ├── cpp
+│ │ ├── ComponentDescriptors.h
+│ │ ├── EventEmitters.cpp
+│ │ ├── EventEmitters.h
+│ │ ├── Props.cpp
+│ │ ├── Props.h
+│ │ ├── ShadowNodes.cpp
+│ │ ├── ShadowNodes.h
+│ │ ├── CenteredTextJSIBinder.h
+│ │ ├── CenteredTextNapiBinder.h
+│ │ └── CenteredTextPackage.h
+│ ├──ets
+│ └── modules.json5  
+ ├── build-profile.json5
+├── hvigorfile.ts
+├── index.ets
+├── oh-package.json5
+└── ts.ts
 ```
 
 **CenteredTextJSIBinder.h**
 
 <!-- tabs:start -->
+
 #### **CenteredTextJSIBinder.h**
+
 ```cpp
 #include "RNOHCorePackage/ComponentBinders/ViewComponentJSIBinder.h"
 
@@ -369,6 +382,7 @@ class CenteredTextJSIBinder : public ViewComponentJSIBinder {
 };
 } // namespace rnoh
 ```
+
 <!-- tabs:end -->
 
 JSI Binder 的作用是桥接 JS 和 C++，将属性从 JS 端传递到 C++ 端。
@@ -376,7 +390,9 @@ JSI Binder 的作用是桥接 JS 和 C++，将属性从 JS 端传递到 C++ 端�
 **CenteredTextNapiBinder.h**
 
 <!-- tabs:start -->
+
 #### **CenteredTextNapiBinder.h**
+
 ```cpp
 #include "RNOHCorePackage/ComponentBinders/ViewComponentNapiBinder.h"
 #include "Props.h"
@@ -398,14 +414,17 @@ public:
 };
 } //namespace rnoh
 ```
+
 <!-- tabs:end -->
 
-Napi Binder的作用是桥接 C++ 和 ArkTs ，将属性从 C++ 端传递到 ArkTs 端。
+Napi Binder 的作用是桥接 C++ 和 ArkTs ，将属性从 C++ 端传递到 ArkTs 端。
 
 **CenteredTextPackage.h**
 
 <!-- tabs:start -->
+
 #### **CenteredTextPackage.h**
+
 ```cpp
 #include "RNOH/Package.h"
 #include "ComponentDescriptor.h"
@@ -432,6 +451,7 @@ public:
 };
 } // namespace rnoh
 ```
+
 <!-- tabs:end -->
 
 Package 接口的用途是让 React-Native 识别出三方库需要导出哪些 C++ 接口。
@@ -452,20 +472,22 @@ Android 第三方库目录文件结构应为如下：
 android
 ├── build.gradle
 └── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncenteredtext
-                    ├── RTNCenteredText.java
-                    ├── RTNCenteredTextManager.java
-                    └── RTNCenteredTextPackage.java
+└── main
+├── AndroidManifest.xml
+└── java
+└── com
+└── rtncenteredtext
+├── RTNCenteredText.java
+├── RTNCenteredTextManager.java
+└── RTNCenteredTextPackage.java
 ```
 
 **RTNCenteredText.java**
 
 <!-- tabs:start -->
+
 #### **RTNCenteredText.java**
+
 ```java
 package com.rtncenteredtext;
 
@@ -500,6 +522,7 @@ public class RTNCenteredText extends TextView {
     }
 }
 ```
+
 <!-- tabs:end -->
 
 这个类表示的是原生视图，将由 Android 渲染到屏幕上。它继承了 TextView 并且调用私有方法 configureComponent() 来配置自身的基本参数。
@@ -507,7 +530,9 @@ public class RTNCenteredText extends TextView {
 **RTNCenteredTextManager.java**
 
 <!-- tabs:start -->
+
 #### **RTNCenteredTextManager.java**
+
 ```java
 package com.rtncenteredtext;
 
@@ -562,6 +587,7 @@ public class RTNCenteredTextManager extends SimpleViewManager<RTNCenteredText>
     }
 }
 ```
+
 <!-- tabs:end -->
 
 RTNCenteredTextManager 类用于让 React Native 实例化原生组件，它实现了由 Codegen 生成的接口（见 implements 语句的 RTNCenteredTextManagerInterface 接口）并使用了 RTNCenteredTextManagerDelegate 类。
@@ -573,7 +599,9 @@ RTNCenteredTextManager 类用于让 React Native 实例化原生组件，它实�
 最后，打开 `android/src/main/java/com/rtncenteredtext` 目录的 `RTNCenteredTextPackage.java`，并进行以下修改：
 
 <!-- tabs:start -->
+
 #### **RTNCenteredTextPackage update**
+
 ```diff
 package com.rtncenteredtext;
 
@@ -599,6 +627,7 @@ public class RTNCenteredTextPackage implements ReactPackage {
 
 }
 ```
+
 <!-- tabs:end -->
 
 新增的代码实例化了一个 RTNCenteredTextManager 对象，用于让 React Natve 运行时渲染 Fabric 组件。
@@ -608,40 +637,42 @@ public class RTNCenteredTextPackage implements ReactPackage {
 Harmony 平台中 Fabric 组件的原生代码必须包含以下三个部分：
 
 1. 创建用于实现组件的 RTNCenteredText.ets
-3. 创建 index.ets
-4. 修改 oh-package.json5，hvigorfile.ts，module.json5
+2. 创建 index.ets
+3. 修改 oh-package.json5，hvigorfile.ts，module.json5
 
- Harmony 第三方库目录文件结构应为如下：
+Harmony 第三方库目录文件结构应为如下：
 
- ```md
+```md
 harmony
 └── rtn-centered-text
-    ├── src
-    │   └── main
-    │       ├── cpp
-    │       │   ├── ComponentDescriptors.h
-    │       │   ├── EventEmitters.cpp
-    │       │   ├── EventEmitters.h
-    │       │   ├── Props.cpp
-    │       │   ├── Props.h
-    │       │   ├── ShadowNodes.cpp
-    │       │   ├── ShadowNodes.h
-    │       │   ├── CenteredTextJSIBinder.h
-    │       │   ├── CenteredTextNapiBinder.h
-    │       │   └── CenteredTextPackage.h
-    │       ├──ets
-    │       │   └── RTNCenteredText.ets
-    │       └── modules.json5         
-    ├── build-profile.json5
-    ├── hvigorfile.ts
-    ├── oh-package.json5
-    └── index.ets
- ```
+├── src
+│ └── main
+│ ├── cpp
+│ │ ├── ComponentDescriptors.h
+│ │ ├── EventEmitters.cpp
+│ │ ├── EventEmitters.h
+│ │ ├── Props.cpp
+│ │ ├── Props.h
+│ │ ├── ShadowNodes.cpp
+│ │ ├── ShadowNodes.h
+│ │ ├── CenteredTextJSIBinder.h
+│ │ ├── CenteredTextNapiBinder.h
+│ │ └── CenteredTextPackage.h
+│ ├──ets
+│ │ └── RTNCenteredText.ets
+│ └── modules.json5  
+ ├── build-profile.json5
+├── hvigorfile.ts
+├── oh-package.json5
+└── index.ets
+```
 
- **RTNCenteredText.ets**
+**RTNCenteredText.ets**
 
 <!-- tabs:start -->
-####  **RTNCenteredText.ets**
+
+#### **RTNCenteredText.ets**
+
 ```ts
 import { Descriptor, ComponentBuilderContext, ViewBaseProps, Tag } from 'rnoh';
 import { RNComponentFactory, RNOHContext, RNViewBase } from 'rnoh'
@@ -688,6 +719,7 @@ export struct RTNCenteredText {
   }
 }
 ```
+
 <!-- tabs:end -->
 
 该部分是 RTNCenteredText 的 Harmony 原生实现。
@@ -695,16 +727,21 @@ export struct RTNCenteredText {
 创建 `index.ets`
 
  <!-- tabs:start -->
+
 #### **index.ets**
+
 ```ts
-export * from './src/main/ets/RTNCenteredText'
+export * from "./src/main/ets/RTNCenteredText";
 ```
+
 <!-- tabs:end -->
 
 修改 `oh-package.json5`，`hvigorfile.ts`，`module.json5`
 
  <!-- tabs:start -->
+
 #### **oh-package.json5**
+
 ```json
 {
   "devDependencies": {
@@ -715,26 +752,33 @@ export * from './src/main/ets/RTNCenteredText'
   "type": "module"
 }
 ```
+
 <!-- tabs:end -->
 
  <!-- tabs:start -->
+
 #### **hvigorfile.ts**
+
 ```ts
-export { harTasks } from '@ohos/hvigor-ohos-plugin';
+export { harTasks } from "@ohos/hvigor-ohos-plugin";
 ```
+
 <!-- tabs:end -->
 
  <!-- tabs:start -->
+
 #### **module.json5**
+
 ```json
 {
-  module: {
-    name: 'centered_text',
-    type: 'har',
-    deviceType: ['default']
+  "module": {
+    "name": "centered_text",
+    "type": "har",
+    "deviceType": ["default"]
   }
 }
 ```
+
 <!-- tabs:end -->
 
 ### 5. 将 Fabric 组件添加到 App
@@ -759,7 +803,7 @@ yarn add ../RTNCenteredText
 
 #### Harmony
 
-!> 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
+> [!tip] 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 React-Native 项目里的鸿蒙工程 `harmony`
 
@@ -829,8 +873,7 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 }
 ```
 
-
-##### 在ArkTs侧引入 CenteredText
+##### 在 ArkTs 侧引入 CenteredText
 
 打开 `entry/src/main/ets/pages/Index.ets`，添加：
 
@@ -911,7 +954,7 @@ struct Index {
 1. 在 js 文件中导入组件。假设要在 App.js 进行导入，需要添加这行代码：
 
 ```js
-import RTNCenteredText from 'rtn-centered-text/js/RTNCenteredTextNativeComponent';
+import RTNCenteredText from "rtn-centered-text/js/RTNCenteredTextNativeComponent";
 ```
 
 2. 接下来，在 React Native 组件里进行调用。调用的语法和其它组件相同：
@@ -919,7 +962,9 @@ import RTNCenteredText from 'rtn-centered-text/js/RTNCenteredTextNativeComponent
 **App.js**
 
 <!-- tabs:start -->
+
 #### **App.js**
+
 ```js
 // ... other code
 const App: () => Node = () => {
@@ -928,10 +973,11 @@ const App: () => Node = () => {
     // ...other React Native elements...
     <RTNCenteredText
       text="Hello World!"
-      style={{width: '100%', height: 30}}
+      style={{ width: "100%", height: 30 }}
     />
     // ...other React Native Elements
   );
 };
 ```
+
 <!-- tabs:end -->

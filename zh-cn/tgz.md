@@ -4,21 +4,22 @@
 
 ## 打包配置
 
-!> 打包前请先配置好 bob-build（bob-build不是必须项，但这里只介绍使用了 bob-build 的打包形式，其他形式请自行查阅资料）
+> [!WARNING] 打包前请先配置好 bob-build（bob-build 不是必须项，但这里只介绍使用了 bob-build 的打包形式，其他形式请自行查阅资料）
 
-一般来说，`src` 里的JS代码是使用 typescript 语言的话，都需要用 bob-build。如果是 Flow 的话，则需要看是否有 index.d.ts 文件，若没有也需要使用。
-
+一般来说，`src` 里的 JS 代码是使用 typescript 语言的话，都需要用 bob-build。如果是 Flow 的话，则需要看是否有 index.d.ts 文件，若没有也需要使用。
 
 ### 配置 bob-build
 
-!> 若源库的 JS 代码并没有改动或原本就是新架构，则可以跳过
+> [!tip] 若源库的 JS 代码并没有改动或原本就是新架构，则可以跳过
 
 `react-native-builder-bob`可以在 React Native 库中为不同目标构建代码，其中鸿蒙需要构建 CommonJS 代码，生成的代码会存储到 `lib`。
 
 打开 `package.json` 添加
 
 <!-- tabs:start -->
+
 #### **package.json**
+
 ```json
     ...,
     // 将JS入口改为bob-build生成的内容
@@ -55,12 +56,15 @@
     },
        ...
 ```
+
 <!-- tabs:end -->
 
 ### 配置 `package.json`
 
 <!-- tabs:start -->
+
 #### **package.json**
+
 ```json
 {
     ...,
@@ -76,6 +80,7 @@
     ...
 }
 ```
+
 <!-- tabs:end -->
 
 ### 执行打包命令

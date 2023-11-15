@@ -1,8 +1,8 @@
 # TurboModules
 
-Turbo Modules是升级版的Native Modules，是基于JSI开发的一套JS与Native交互的轻量级框架。TurboModules 本质上的作用是导出一系列的Native方法供JS使用。
+Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 与 Native 交互的轻量级框架。TurboModules 本质上的作用是导出一系列的 Native 方法供 JS 使用。
 
-详细的原理分析可以看：[React Native之新架构中的Turbo Module实现原理分析](https://cloud.tencent.com/developer/article/1889895)
+详细的原理分析可以看：[React Native 之新架构中的 Turbo Module 实现原理分析](https://cloud.tencent.com/developer/article/1889895)
 
 ![turbomodules](../img/turbomodule2.png)
 
@@ -23,10 +23,10 @@ Turbo Modules是升级版的Native Modules，是基于JSI开发的一套JS与Nat
 ```md
 .
 └── RTNCalculator
-    ├── android（Android 的原生实现代码）
-    ├── ios（iOS 的原生实现代码）
-    ├── harmony（Harmony 的原生实现代码）
-    └── src （js/ts代码）
+├── android（Android 的原生实现代码）
+├── ios（iOS 的原生实现代码）
+├── harmony（Harmony 的原生实现代码）
+└── src （js/ts 代码）
 ```
 
 ### 2. 声明 JavaScript 接口
@@ -43,34 +43,33 @@ Turbo Modules是升级版的Native Modules，是基于JSI开发的一套JS与Nat
 #### **flow**
 
 NativeCalculator.js
+
 ```js
 // @flow
-import type { TurboModule } from 'react-native/Libraries/TurboModule/RCTExport';
-import { TurboModuleRegistry } from 'react-native';
+import type { TurboModule } from "react-native/Libraries/TurboModule/RCTExport";
+import { TurboModuleRegistry } from "react-native";
 
 export interface Spec extends TurboModule {
   add(a: number, b: number): Promise<number>;
 }
-export default (TurboModuleRegistry.get<Spec>(
-  'RTNCalculator'
-): ?Spec);
+export default (TurboModuleRegistry.get<Spec>("RTNCalculator"): ?Spec);
 ```
 
 #### **typescript**
 
 NativeCalculator.ts
+
 ```ts
-import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
-import {TurboModuleRegistry} from 'react-native';
+import type { TurboModule } from "react-native/Libraries/TurboModule/RCTExport";
+import { TurboModuleRegistry } from "react-native";
 
 export interface Spec extends TurboModule {
   add(a: number, b: number): Promise<number>;
 }
 
-export default TurboModuleRegistry.get<Spec>(
-  'RTNCalculator',
-) as Spec | null;
+export default TurboModuleRegistry.get<Spec>("RTNCalculator") as Spec | null;
 ```
+
 <!-- tabs:end -->
 
 在代码顶部需导入以下两个声明文件：
@@ -83,7 +82,8 @@ export default TurboModuleRegistry.get<Spec>(
 最后，调用 `TurboModuleRegistry.get` 并传入模块名，它将在 Turbo Native Module 可用的时候进行加载。
 
 ### 3. Codegen 配置
-接下来，需要为 Codegen 和自动链接添加一些配置。Codegen的作用是生成 C++ 脚手架代码，负责串联 JS 和原生侧。
+
+接下来，需要为 Codegen 和自动链接添加一些配置。Codegen 的作用是生成 C++ 脚手架代码，负责串联 JS 和原生侧。
 
 有一些配置文件在 Android/iOS 平台是通用的，而有的仅能在某一平台使用。
 
@@ -150,24 +150,26 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 1. 带有 Codegen 配置信息的 build.gradle 文件
 2. AndroidManifest.xml
 3. 一个实现 ReactPackage 接口的 Java 类
-在文件创建完成后，android 目录文件结构应该是这样的：
+   在文件创建完成后，android 目录文件结构应该是这样的：
 
 ```md
 android
 ├── build.gradle
 └── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncalculator
-                    └── CalculatorPackage.java
+└── main
+├── AndroidManifest.xml
+└── java
+└── com
+└── rtncalculator
+└── CalculatorPackage.java
 ```
 
 首先，在 `android` 目录创建 `build.gradle` 文件，并配置以下内容：
 
 <!-- tabs:start -->
+
 #### **build.gradle**
+
 ```gradle
 buildscript {
   ext.safeExtGet = {prop, fallback ->
@@ -202,17 +204,21 @@ dependencies {
   implementation 'com.facebook.react:react-native:+'
 }
 ```
+
 <!-- tabs:end -->
 
 其次，创建 `android/src/main` 目录，然后在这个目录内创建 `AndroidManifest.xml` 文件，并编写以下代码：
 
 <!-- tabs:start -->
+
 #### **AndroidManifest.xml**
+
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.rtncalculator">
 </manifest>
 ```
+
 <!-- tabs:end -->
 
 这个 manifest 文件的用途是声明您开发的模块的 Java 包
@@ -222,7 +228,9 @@ dependencies {
 创建 `android/src/main/java/com/rtncalculator` 目录，在这个目录内创建 `CalculatorPackage.java` 文件
 
 <!-- tabs:start -->
+
 #### **CalculatorPackage.java**
+
 ```java
 package com.rtncalculator;
 
@@ -249,6 +257,7 @@ public class CalculatorPackage extends TurboReactPackage {
   }
 }
 ```
+
 <!-- tabs:end -->
 
 ReactPackage 接口的用途是让 React Native 为使用 App 中的 ViewManager 和 Native Modules，识别出哪些原生类需要在第三方库里导出。
@@ -257,30 +266,33 @@ Codegen 会在 App 编译的时候自动运行。
 
 #### Harmony
 
-!> 待完善能力：因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
+> [!tip] 待完善能力：因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
 
- 在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`CalculatorTurboModule.h`，`CalculatorTurboModule.cpp`。
+在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`CalculatorTurboModule.h`，`CalculatorTurboModule.cpp`。
 
 ```md
 harmony
 └── rtn-calculator
-    ├── src
-    │   └── main
-    │       ├── cpp
-    │       │   ├── CalculatorPacakge.h
-    │       │   ├── CMakeLists.txt
-    │       │   ├── CalculatorTurboModule.cpp
-    │       │   └── CalculatorTurboModule.h
-    │       ├──ets
-    │       └── modules.json5         
-    ├── build-profile.json5
-    ├── hvigorfile.ts
-    ├── index.ets
-    ├── oh-package.json5
-    └── ts.ts
+├── src
+│ └── main
+│ ├── cpp
+│ │ ├── CalculatorPacakge.h
+│ │ ├── CMakeLists.txt
+│ │ ├── CalculatorTurboModule.cpp
+│ │ └── CalculatorTurboModule.h
+│ ├──ets
+│ └── modules.json5  
+ ├── build-profile.json5
+├── hvigorfile.ts
+├── index.ets
+├── oh-package.json5
+└── ts.ts
 ```
+
 <!-- tabs:start -->
+
 #### **CMakeLists.txt**
+
 ```cmake
 # the minimum version of CMake
 cmake_minimum_required(VERSION 3.13)
@@ -291,10 +303,13 @@ add_library(rnoh_calculator SHARED ${rnoh_calculator_SRC})
 target_include_directories(rnoh_calculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(rnoh_calculator PUBLIC rnoh)
 ```
+
 <!-- tabs:end -->
 
 <!-- tabs:start -->
+
 #### **CalculatorTurboModule.h**
+
 ```cpp
 # pragma once
 # include "RNOH/ArkTSTurboModule.h"
@@ -306,10 +321,13 @@ namespace rnoh {
   };
 } // namespace rnoh
 ```
+
 <!-- tabs:end -->
 
 <!-- tabs:start -->
+
 #### **CalculatorTurboModule.cpp**
+
 ```cpp
 #include "RTNCalculatorTurboModule.h"
 #include "RNOH/ArkTSTurboModule.h"
@@ -325,12 +343,15 @@ RTNCalculatorTurboModule::RTNCalculatorTurboModule(const ArkTSTurboModule::Conte
   methodMap_["add"] = MethodMetadata{2, __hostFunction_RTNCalculatorTurboModule_add};
 }
 ```
+
 <!-- tabs:end -->
 
-
 通过 `RNOH/Package.h` 来导出 CalculatorPackage
+
 <!-- tabs:start -->
+
 #### **CalculatorPacakge.h**
+
 ```cpp
 #include "RNOH/Package.h"
 #include "RTNCalculatorTurboModule.h"
@@ -357,6 +378,7 @@ namespace rnoh {
   };
 } // namespace rnoh
 ```
+
 <!-- tabs:end -->
 
 ### 4. 原生代码
@@ -368,24 +390,27 @@ Android 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 1. 创建用于实现模块的 CalculatorModule.java
 2. 修改之前生成的 CalculatorPackage.java
 
- Android 第三方库目录文件结构应为如下：
- ```md
- android
+Android 第三方库目录文件结构应为如下：
+
+```md
+android
 ├── build.gradle
 └── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncalculator
-                    ├── CalculatorModule.java
-                    └── CalculatorPackage.java
- ```
+└── main
+├── AndroidManifest.xml
+└── java
+└── com
+└── rtncalculator
+├── CalculatorModule.java
+└── CalculatorPackage.java
+```
 
 创建 CalculatorModule.java
 
 <!-- tabs:start -->
+
 #### **CalculatorModule.java**
+
 ```java
 package com.rtncalculator;
 
@@ -419,6 +444,7 @@ public class CalculatorModule extends NativeCalculatorSpec {
     }
 }
 ```
+
 <!-- tabs:end -->
 
 这个类实现了模块的功能，它继承了 NativeCalculatorSpec 类，而这个类是之前从 JavaScript 接口声明文件 NativeCalculator 自动生成的。
@@ -426,7 +452,9 @@ public class CalculatorModule extends NativeCalculatorSpec {
 修改 CalculatorPackage.java
 
 <!-- tabs:start -->
+
 #### **CalculatorPackage.java**
+
 ```diff
 package com.rtncalculator;
 
@@ -476,6 +504,7 @@ public class CalculatorPackage extends TurboReactPackage {
   }
 }
 ```
+
 <!-- tabs:end -->
 
 这就是 Android 平台原生代码的最后一部分，它定义了 TurboReactPackage 对象，这个对象将用于 App 的模块加载。
@@ -489,41 +518,45 @@ Harmony 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 3. 创建 index.ets 和 ts.ts
 4. 修改 oh-package.json5，hvigorfile.ts，module.json5
 
- Harmony 第三方库目录文件结构应为如下：
- ```md
+Harmony 第三方库目录文件结构应为如下：
+
+```md
 harmony
 └── rtn-calculator
-    ├── src
-    │   └── main
-    │       ├── cpp
-    │       │   ├── CalculatorPacakge.h
-    │       │   ├── CMakeLists.txt
-    │       │   ├── CalculatorTurboModule.cpp
-    │       │   └── CalculatorTurboModule.h
-    │       ├──ets
-    │       │   ├── CalculatorModule.ts
-    │       │   └── CalculatorPackage.ts
-    │       └── modules.json5         
-    ├── build-profile.json5
-    ├── hvigorfile.ts
-    ├── index.ets
-    ├── oh-package.json5
-    └── ts.ts
- ```
+├── src
+│ └── main
+│ ├── cpp
+│ │ ├── CalculatorPacakge.h
+│ │ ├── CMakeLists.txt
+│ │ ├── CalculatorTurboModule.cpp
+│ │ └── CalculatorTurboModule.h
+│ ├──ets
+│ │ ├── CalculatorModule.ts
+│ │ └── CalculatorPackage.ts
+│ └── modules.json5  
+ ├── build-profile.json5
+├── hvigorfile.ts
+├── index.ets
+├── oh-package.json5
+└── ts.ts
+```
 
 创建 `CalculatorModule.ts`
 
 <!-- tabs:start -->
+
 #### **CalculatorModule.ts**
+
 ```ts
-import { TurboModule } from 'rnoh/ts';
+import { TurboModule } from "rnoh/ts";
 
 export class CalculatorModule extends TurboModule {
   add(a: number, b: number): Promise<number> {
-    return new Promise(resolve => resolve(a + b));
+    return new Promise((resolve) => resolve(a + b));
   }
 }
 ```
+
 <!-- tabs:end -->
 
 这个类实现了模块的功能，它继承了 TurboModule 类，对应 Android 里的 NativeCalculatorSpec。
@@ -531,7 +564,9 @@ export class CalculatorModule extends TurboModule {
 创建用于实现模块的 `CalculatorModule.ts`
 
  <!-- tabs:start -->
+
 #### **CalculatorPackage.ts**
+
 ```ts
 import { RNPackage, TurboModulesFactory } from 'rnoh/ts;
 import type { TurboModule, TurboModuleContext } from 'rnoh/ts';
@@ -556,6 +591,7 @@ export class CalculatorPackage extends RNPackage {
   }
 }
 ```
+
 <!-- tabs:end -->
 
 这就是 Harmony 平台原生代码的最后一部分，它定义了 RNPackage 对象，这个对象将用于 App 的模块加载。
@@ -563,24 +599,32 @@ export class CalculatorPackage extends RNPackage {
 创建 `ts.ts` 和 `index.ets`
 
  <!-- tabs:start -->
+
 #### **ts.ts**
+
 ```ts
-export * from "./src/main/ets/CalculatorPackage"
-export * from "./src/main/ets/CalculatorModule"
+export * from "./src/main/ets/CalculatorPackage";
+export * from "./src/main/ets/CalculatorModule";
 ```
+
 <!-- tabs:end -->
 
  <!-- tabs:start -->
+
 #### **index.ets**
+
 ```ts
-export * from './ts'
+export * from "./ts";
 ```
+
 <!-- tabs:end -->
 
 修改 `oh-package.json5`，`hvigorfile.ts`，`module.json5`
 
  <!-- tabs:start -->
+
 #### **oh-package.json5**
+
 ```json
 {
   "devDependencies": {
@@ -591,26 +635,33 @@ export * from './ts'
   "type": "module"
 }
 ```
+
 <!-- tabs:end -->
 
  <!-- tabs:start -->
+
 #### **hvigorfile.ts**
+
 ```ts
-export { harTasks } from '@ohos/hvigor-ohos-plugin';
+export { harTasks } from "@ohos/hvigor-ohos-plugin";
 ```
+
 <!-- tabs:end -->
 
  <!-- tabs:start -->
+
 #### **module.json5**
+
 ```json
 {
-  module: {
-    name: 'calculator',
-    type: 'har',
-    deviceType: ['default']
+  "module": {
+    "name": "calculator",
+    "type": "har",
+    "deviceType": ["default"]
   }
 }
 ```
+
 <!-- tabs:end -->
 
 ### 5. 将 Turbo Native Module 添加到 App
@@ -635,7 +686,7 @@ yarn add ../RTNCalculator
 
 #### Harmony
 
-!> 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
+> [!tip] 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 React-Native 项目里的鸿蒙工程 `harmony`
 
@@ -705,8 +756,7 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 }
 ```
 
-
-##### 在ArkTs侧引入 Calculator TurboModule
+##### 在 ArkTs 侧引入 Calculator TurboModule
 
 打开 `entry/src/main/ets/RNPackageFactory.ts`，添加：
 
@@ -728,7 +778,9 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
 以下是一个在 App.js 中调用 add 方法的例子：
 
 <!-- tabs:start -->
+
 #### **App.js**
+
 ```js
 /**
  * Sample React Native App
@@ -737,24 +789,19 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
  * @format
  * @flow strict-local
  */
-import React from 'react';
-import {useState} from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  Button,
-} from 'react-native';
-import RTNCalculator from 'rtn-calculator/js/NativeCalculator.js';
+import React from "react";
+import { useState } from "react";
+import type { Node } from "react";
+import { SafeAreaView, StatusBar, Text, Button } from "react-native";
+import RTNCalculator from "rtn-calculator/js/NativeCalculator.js";
 
 const App: () => Node = () => {
   const [result, setResult] = useState<number | null>(null);
   return (
     <SafeAreaView>
-      <StatusBar barStyle={'dark-content'} />
-      <Text style={{marginLeft: 20, marginTop: 20}}>
-        3+7={result ?? '??'}
+      <StatusBar barStyle={"dark-content"} />
+      <Text style={{ marginLeft: 20, marginTop: 20 }}>
+        3+7={result ?? "??"}
       </Text>
       <Button
         title="Compute"
@@ -768,5 +815,5 @@ const App: () => Node = () => {
 };
 export default App;
 ```
-<!-- tabs:end -->
 
+<!-- tabs:end -->

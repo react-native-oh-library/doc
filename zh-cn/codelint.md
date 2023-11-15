@@ -2,7 +2,7 @@
 
 ## 常见代码检测/格式化工具
 
-React-Native 三方库中，常见的代码检测/格式化工具有ESlint、Prettier、Pre-Commit Hook等。若三方库用了某个工具，那在上传代码前就需要使用。
+React-Native 三方库中，常见的代码检测/格式化工具有 ESlint、Prettier、Pre-Commit Hook 等。若三方库用了某个工具，那在上传代码前就需要使用。
 
 ### ESlint
 
@@ -12,22 +12,23 @@ ESlint 是一个按照规则给出报告的代码检测工具，也可以自动�
 
 在 `package.json` 的 script 字段添加脚本或直接使用原库提供的脚本
 
- ```json
- "script": {
-    "lint": "npx eslint src/**/*.js",  // 代码检查
-    "lint:fix": "npx eslint src/**/*.js --fix",  // 自动修复
-    ...
- }
- // src 是需要检查的路径
- ```
+```json
+"script": {
+   "lint": "npx eslint src/**/*.js",  // 代码检查
+   "lint:fix": "npx eslint src/**/*.js --fix",  // 自动修复
+   ...
+}
+// src 是需要检查的路径
+```
+
 可在 `.eslintignore` 文件里添加目标路径里不想执行检查的文件;
 
 `.eslintrc.js` 或 `.eslintrc.json` 是 ESlint 的配置文件。
 
- 例子：
+例子：
 
- > @react-native-community/slider
- 
+> @react-native-community/slider
+
 `package.json` 里已经配置好了相关命令。
 
 ```json
@@ -43,18 +44,22 @@ ESlint 是一个按照规则给出报告的代码检测工具，也可以自动�
 可直接在命令行里执行
 
 <!-- tabs:start -->
+
 #### **npm**
+
 ```bash
 npm run lint
 ```
 
 #### **yarn**
+
 ```bash
 yarn lint
 ```
+
 <!-- tabs:end -->
 
- ### Prettier
+### Prettier
 
 Prettier 是代码格式化工具，也可以格式化 MarkDown 文档
 
@@ -77,15 +82,19 @@ npm run prettier
 ```
 
 <!-- tabs:start -->
+
 #### **npm**
+
 ```bash
 npm run prettier
 ```
 
 #### **yarn**
+
 ```bash
 yarn prettier
 ```
+
 <!-- tabs:end -->
 
 `.prettierrc.js`、`.prettierrc` 是 Prettier 的配置文件。
@@ -109,19 +118,17 @@ yarn prettier
 可直接在命令行里执行
 
 <!-- tabs:start -->
+
 #### **npm**
+
 ```bash
 npm run format-js
 ```
 
 #### **yarn**
+
 ```bash
 yarn format-js
 ```
+
 <!-- tabs:end -->
-
-
-
-
-
-

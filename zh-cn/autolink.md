@@ -1,6 +1,6 @@
 # AutoLink
 
-React Native 0.60 加入了一个很重要的特性: **autolinking** ，从此项目引入第三方库中的原生依赖再也不用额外调用 `react-native link` 命令了，同时link时也不会像之前一样入侵原生代码（例如修改android的 `setting.gradle`, `bulid.gradle`）
+React Native 0.60 加入了一个很重要的特性: **autolinking** ，从此项目引入第三方库中的原生依赖再也不用额外调用 `react-native link` 命令了，同时 link 时也不会像之前一样入侵原生代码（例如修改 android 的 `setting.gradle`, `bulid.gradle`）
 
 ## Android 平台的 Link
 
@@ -8,7 +8,8 @@ React Native 0.60 加入了一个很重要的特性: **autolinking** ，从此�
 
 ### Android Manual Link
 
-`react-native link` 做的事情有3件：
+`react-native link` 做的事情有 3 件：
+
 1. 在 `android/setting.gradle` 下添加:
 
 ```diff
@@ -37,23 +38,24 @@ React Native 0.60 加入了一个很重要的特性: **autolinking** ，从此�
  }
 ```
 
-> 第1和第2步对应 Harmony 在 oh-package.json 和 CMakeLists.txt 上的依赖路径配置，第3步对应在 index.ets 上引入包的修改。
+> 第 1 和第 2 步对应 Harmony 在 oh-package.json 和 CMakeLists.txt 上的依赖路径配置，第 3 步对应在 index.ets 上引入包的修改。
 
 ### Android AutoLink
 
-autolink时并不会在这3个文件上添加任何代码(autolink发生在项目编译打包过程中，而不是安装依赖时)
+autolink 时并不会在这 3 个文件上添加任何代码(autolink 发生在项目编译打包过程中，而不是安装依赖时)
 
 在三处地方比以往多了一些变化。
 
 #### `setting.gradle`变化
+
 ```gradle
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 ```
 
-`setting.gradle` 的作用是配置项目所需要用到的依赖，gradle插件会加载里面的所有依赖并添加到android项目中。
+`setting.gradle` 的作用是配置项目所需要用到的依赖，gradle 插件会加载里面的所有依赖并添加到 android 项目中。
 
-从代码可知，这条语句是去调用 `/node_modules/@react-native-community/cli-platform-android/native_modules.gradle` 这个gradle文件下的 **applyNativeModulesSettingsGradle** 方法
+从代码可知，这条语句是去调用 `/node_modules/@react-native-community/cli-platform-android/native_modules.gradle` 这个 gradle 文件下的 **applyNativeModulesSettingsGradle** 方法
 
 ```gradle
 // native_modules.gradle
@@ -65,10 +67,11 @@ ext.applyNativeModulesSettingsGradle = { DefaultSettings defaultSettings, String
     logger.warn("${ReactNativeModules.LOG_PREFIX}Passing custom root is deprecated. CLI detects root automatically now.");
     logger.warn("${ReactNativeModules.LOG_PREFIX}Please remove second argument to `applyNativeModulesSettingsGradle`.");
   }
-  autoModules.addReactNativeModuleProjects(defaultSettings) 
+  autoModules.addReactNativeModuleProjects(defaultSettings)
 }
 ...
 ```
+
 可以看到，**applyNativeModulesSettingsGradle** 会去调用 **ReactNativeModules** 类的实例 **autoModules** 的 **addReactNativeModuleProjects**方法
 
 ```java
@@ -104,7 +107,7 @@ class ReactNativeModules {
 }
 ```
 
-**defaultSettings** 是在 `setting.gradle` 里作为**applyNativeModulesSettingsGradle** 的参数传进来，本质是 `setting.gradle` 文件的内置隐含对象settings
+**defaultSettings** 是在 `setting.gradle` 里作为**applyNativeModulesSettingsGradle** 的参数传进来，本质是 `setting.gradle` 文件的内置隐含对象 settings
 
 所以
 
@@ -175,15 +178,15 @@ ext.applyNativeModulesAppBuildGradle = { Project project, String root = null ->
       }
     }
   }
-  ```
+```
 
- 作用等同于
+作用等同于
 
- ```gradle
-    dependencies {
-        implementation project(':react-nativexx库')
-        implementation project(':react-nativexxx库')
-   }
+```gradle
+   dependencies {
+       implementation project(':react-nativexx库')
+       implementation project(':react-nativexxx库')
+  }
 ```
 
 然后调用 **generatePackagesFile** 方法
@@ -225,7 +228,7 @@ ext.applyNativeModulesAppBuildGradle = { Project project, String root = null ->
 ```
 
 最终结果是生成了一个文件 `PackageList.java`，路径是 `/android/build/generated/rn/src/main/java/com/facebook/react/PackageList.java`。
-这个代码定义了一个 **PackageList** 类，重点是 **getPackages()** 方法,返回所有的package。
+这个代码定义了一个 **PackageList** 类，重点是 **getPackages()** 方法,返回所有的 package。
 
 #### `android/app/src/main/java/com/your-app/MainApplication.java`变化
 
@@ -252,12 +255,12 @@ ext.applyNativeModulesAppBuildGradle = { Project project, String root = null ->
     }
 ```
 
-这3处变化使得 Android 的link过程自动化，同时避免了原生代码的改动
+这 3 处变化使得 Android 的 link 过程自动化，同时避免了原生代码的改动
 
-## Harmony 平台的Link
+## Harmony 平台的 Link
 
 ### Harmony Link
 
 ### Harmony AutoLink
 
-目前 Harmony平台的 AutoLink 还在规划阶段，预计会在未来推出。
+目前 Harmony 平台的 AutoLink 还在规划阶段，预计会在未来推出。

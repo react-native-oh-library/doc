@@ -43,6 +43,21 @@ copyAssets(assets, args.assetsDest);
 
 将 node_modules 的 `react-native/Libraries/Utilities/Platform.d.ts` 替换成 react-native-harmony 包里 `react-native-harmony/Libraries/Utilities/Platform.d.ts`。
 
+### 1.5 bob-build 时报错："harmony/***/hvigorfile.ts:2:26 - error TS2307: Cannot find module '@ohos/hvigor-ohos-plugin' or its corresponding type declarations."
+
+把 hvigorfile.ts所在目录(如："harmony" )添加到添加到tsconfig.build.json文件的exclude中，bob-build时就不会对harmony下面文件编译成js。
+
+**tsconfig.build.json**
+
+```json
+{
+  "extends": "./tsconfig",
+  "exclude": ["example","harmony"]
+}
+```
+
+
+
 ## 2. 环境配置相关
 
 ### 2.1 ArkTs 语法校验报错

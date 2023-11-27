@@ -102,9 +102,12 @@ example：
 
 ### 添加别名
 
-在 `package.json` 里添加 "harmony" 字段：
+由于当前版本设置组织名后，会导致设置别名的库无法被找到，所以展示不需要设置别名。
+
+~~在 `package.json` 里添加 "harmony" 字段：~~
 
 ```json
+// 暂不配置
 {
     "harmony": {
         "alias": {原NPM包名}
@@ -112,7 +115,7 @@ example：
 }
 ```
 
-RNOH 的打包工具会识别出 `node_modules` 下第一级目录的所有 RNOH 三方库的别名（第二级目录暂不支持，已提 issue），这样在 JS 端 import 三方库使用的时候，可以使用原库的名字。如 import xxx from "@react-native-community/slider"。
+~~RNOH 的打包工具会识别出 `node_modules` 下第一级目录的所有 RNOH 三方库的别名（第二级目录暂不支持，已提 issue），这样在 JS 端 import 三方库使用的时候，可以使用原库的名字。如 import xxx from "@react-native-community/slider"。~~
 
 ### 将三方库的私有 NPM 包托管到 github
 

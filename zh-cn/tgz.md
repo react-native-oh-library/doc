@@ -83,6 +83,24 @@
 
 <!-- tabs:end -->
 
+#### **tsconfig.build.json**
+
+把 harmony 添加到exclude中，否则执行bob-build会将其中的ts/ets编译为js，编译失败会报错，导致bob失败。例如harmony/**/hvigorfile.ts
+
+```json
+{
+  "extends": "./tsconfig",
+  "exclude": ["example","harmony"]
+}
+```
+报错信息如下：
+
+```js
+harmony/blur/hvigorfile.ts:2:26 - error TS2307: Cannot find module '@ohos/hvigor-ohos-plugin' or its corresponding type declarations.
+
+2 export { harTasks } from '@ohos/hvigor-ohos-plugin';
+```
+
 ### 执行打包命令
 
 ```bash

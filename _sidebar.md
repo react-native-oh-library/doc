@@ -17,6 +17,7 @@
     - [原生实现](zh-cn/native.md)
 
 - 发布
+    - [三方库文件结构整改（补丁形式）](zh-cn/patch.md)
     - [代码格式检查](zh-cn/codelint.md)
     - [开源管理](zh-cn/open-source.md)
     - [本地打包三方库](zh-cn/tgz.md)

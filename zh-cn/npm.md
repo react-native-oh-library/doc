@@ -15,7 +15,7 @@
 ```json
 {
     ...
-    "name": "@react-native-oh-library/包名",
+    "name": "@react-native-oh-tpl/包名",
     "version": "自行管理好版本号",
     "repository": {
         "type": "git",

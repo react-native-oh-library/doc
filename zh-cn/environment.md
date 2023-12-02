@@ -47,7 +47,7 @@ npm install -g yarn
 
 在 windows 上可以搭建安卓环境，用于效果比对和 RN Demo 的开发和 codegen 生成代码。
 
-> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
+> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 ios / Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
 ## 搭建 Harmony 环境
 

@@ -36,17 +36,18 @@ npm install -g yarn
 
 安装完 yarn 之后就可以用 yarn 代替 npm 了，例如用 `yarn` 代替 `npm install` 命令，用 `yarn add 某第三方库名` 代替 `npm install 某第三方库名`。
 
-## 搭建 Android 环境
-
-我们需要搭建 Android 和 Harmony 两套环境。安卓环境主要用于效果比对和 RN Demo 的开发。
-
-> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
-
 ## 搭建 ios 环境
 
-ios 环境主要用于效果比对和 RN Demo 的开发。
+我们需要搭建 ios/Android 和 Harmony 两套环境，ios 环境主要用于效果比对和 RN Demo 的开发。因为 arkui 对标 swift，，<font size="4">**rnoh 也对标 ios**</font>
+，推荐搭建 ios 环境，方便对齐效果。没有 mac，可以在 windows 搭建 Android 环境查看效果。在 ios/Android 环境可以运行 codegen 生成代码。
 
 > [!WARNING] 请先参考官方的 React-Naitve + ios 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)。
+
+## 搭建 Android 环境
+
+在 windows 上可以搭建安卓环境，用于效果比对和 RN Demo 的开发和 codegen 生成代码。
+
+> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
 ## 搭建 Harmony 环境
 

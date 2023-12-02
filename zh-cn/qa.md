@@ -43,20 +43,18 @@ copyAssets(assets, args.assetsDest);
 
 将 node_modules 的 `react-native/Libraries/Utilities/Platform.d.ts` 替换成 react-native-harmony 包里 `react-native-harmony/Libraries/Utilities/Platform.d.ts`。
 
-### 1.5 bob-build 时报错："harmony/***/hvigorfile.ts:2:26 - error TS2307: Cannot find module '@ohos/hvigor-ohos-plugin' or its corresponding type declarations."
+### 1.5 bob-build 时报错："harmony/\*\*\*/hvigorfile.ts:2:26 - error TS2307: Cannot find module '@ohos/hvigor-ohos-plugin' or its corresponding type declarations."
 
-把 hvigorfile.ts所在目录(如："harmony" )添加到添加到tsconfig.build.json文件的exclude中，bob-build时就不会对harmony下面文件编译成js。
+把 hvigorfile.ts 所在目录(如："harmony" )添加到添加到 tsconfig.build.json 文件的 exclude 中，bob-build 时就不会对 harmony 下面文件编译成 js。
 
 **tsconfig.build.json**
 
 ```json
 {
   "extends": "./tsconfig",
-  "exclude": ["example","harmony"]
+  "exclude": ["example", "harmony"]
 }
 ```
-
-
 
 ## 2. 环境配置相关
 
@@ -86,10 +84,10 @@ copyAssets(assets, args.assetsDest);
 
 ```
 
-### 2.3 mac鸿蒙模拟器已启动，依然无法发现设备
+### 2.3 mac 鸿蒙模拟器已启动，依然无法发现设备
 
-先把android模拟器关闭即可。
+先把 android 模拟器关闭即可。
 
-### 2.4 mac鸿蒙模拟器，重新打开后之前安装的app没了
+### 2.4 mac 鸿蒙模拟器，重新打开后之前安装的 app 没了
 
 模拟器暂时不支持保存数据

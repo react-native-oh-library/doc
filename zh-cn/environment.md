@@ -42,6 +42,12 @@ npm install -g yarn
 
 > [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
+## 搭建 ios 环境
+
+ios 环境主要用于效果比对和 RN Demo 的开发。
+
+> [!WARNING] 请先参考官方的 React-Naitve + ios 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)。
+
 ## 搭建 Harmony 环境
 
 ### IDE 和手机版本
@@ -55,6 +61,12 @@ DevEco Studio 版本：4.0.3.601
 OpenHarmony(API10): 4.0.10.11
 
 工程机版本：NOH-AN00 204.0.0.65(SP4C00E70R1P12)
+
+### 在 mac 上安装鸿蒙模拟器
+
+[mac 上使用模拟器](https://harmonyosdevelopertest.devccsrnd.hwcloudtest.cn:3087/cn/docs/doc-guides-V4/run_simulator-0000001582636200-V4)
+
+[!WARNING] 安装模拟器成功后，启动模拟器，如果已经启动了 android 模拟器，deveco 无法发现鸿蒙模拟器，解决方法是先把 android 模拟器关闭。原因是当前 hdc 命令支持 adb，android 模拟器启动后，就不会再搜索鸿蒙模拟器了，后续版本会修复。
 
 ### 拉取 RNOH 代码
 

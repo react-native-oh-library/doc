@@ -85,3 +85,11 @@ copyAssets(assets, args.assetsDest);
 }
 
 ```
+
+### 2.3 mac鸿蒙模拟器已启动，依然无法发现设备
+
+先把android模拟器关闭即可。
+
+### 2.4 mac鸿蒙模拟器，重新打开后之前安装的app没了
+
+模拟器暂时不支持保存数据

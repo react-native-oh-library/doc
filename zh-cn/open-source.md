@@ -2,7 +2,7 @@
 
 本章节仅供内部开发者查阅，方便 RNOH 三方库后续展开开源工作。
 
-目前所有的 RNOH 三方库在蓝区统一放在 [react-native-oh-library](https://github.com/orgs/react-native-oh-library/repositories) 组织管理，请相关开发者先申请加入。
+目前所有的 RNOH 三方库的源码统一放在 Github 的 [react-native-oh-library](https://github.com/orgs/react-native-oh-library/repositories) 组织管理，请相关开发者先申请加入。
 
 ## 建仓
 
@@ -54,10 +54,10 @@
 
 [Version Info]:
 
-- RNOH: 0.72.10
-- DevEco Studio: 4.0.3.601
+- RNOH: 0.72.11
+- DevEco Studio: 4.0.3.700
 - OH SDK: 4.0.10.11
-- ROM: 4.0.0.65(SP4C00E70R1P12log)
+- ROM: 4.0.0.66(SP3C00E73R1P14log)
 ```
 
 4. 需要上传本地打包的 tgz 文件
@@ -70,26 +70,36 @@
 
 去掉组织名取后半段：
 
-> "@react-native-oh-library/原包名后半段"
+> "@react-native-oh-library/原包名后半段" // 私仓
+
+> "@react-native-oh-tpl/原包名后半段" // 公仓
 
 example：
 
 ```md
+// 私仓
 "@react-native-community/slider" → "@react-native-oh-library/slider"
 
-"@react-native-async-storage/async-storage" → "@react-native-oh-library/async-storage"
+// 公仓
+"@shopify/flash-list" → "@react-native-oh-tpl/flash-list"
 ```
 
 **情况 2.** 如果原库在 NPM 上的包没有组织前缀，如 "react-native-pager-view" 等；
 
 直接添加新的组织名：
 
-> "@react-native-oh-library/原包名"
+> "@react-native-oh-library/原包名" // 私仓
+
+> "@react-native-oh-tpl/原包名" // 公仓
 
 example：
 
 ```md
-"react-native-pager-view" → "@react-native-oh-library/react-native-pager-view"
+// 私仓
+"react-native-translucent-modal" → "@react-native-oh-library/react-native-translucent-modal"
+
+// 公仓
+"react-native-pager-view" → "@react-native-oh-tpl/react-native-pager-view"
 ```
 
 如果有重名等其他特殊情况，请联系组织管理员协商。
@@ -117,6 +127,12 @@ example：
 
 ~~RNOH 的打包工具会识别出 `node_modules` 下第一级目录的所有 RNOH 三方库的别名（第二级目录暂不支持，已提 issue），这样在 JS 端 import 三方库使用的时候，可以使用原库的名字。如 import xxx from "@react-native-community/slider"。~~
 
-### 将三方库的私有 NPM 包托管到 github
+### 发布 npm 包
 
-请查阅 [发布三方库到 Github Packages](zh-cn/github-package.md)，也可参考 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
+#### 将私有 NPM 包托管到 Github Packages
+
+请查阅 [发布三方库到 Github Packages](zh-cn/github-package.md)，也可参考已发布的 [@react-native-oh-library/react-native-slider](https://github.com/react-native-oh-library/react-native-slider)。
+
+#### 将三方库发布到 npm 官方仓
+
+请查阅 [发布三方库到 NPM 官方仓](zh-cn/npm.md)，也可参考已发布的 [@react-native-oh-tpl/react-native-linear-gradient](https://github.com/react-native-oh-library/react-native-linear-gradient)。

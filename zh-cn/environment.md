@@ -36,11 +36,20 @@ npm install -g yarn
 
 安装完 yarn 之后就可以用 yarn 代替 npm 了，例如用 `yarn` 代替 `npm install` 命令，用 `yarn add 某第三方库名` 代替 `npm install 某第三方库名`。
 
+## 搭建 ios 环境
+
+ios 环境主要用于效果比对和 RN Demo 的开发。因为 arkui 对标 swift，<font size="4">**rnoh 也对标 ios**</font>
+，推荐搭建 ios 环境，方便对齐效果。也可以在 ios 环境可以运行 codegen 生成代码。
+
+> [!WARNING] 请先参考官方的 React-Naitve + ios 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)。
+
 ## 搭建 Android 环境
 
-我们需要搭建 Android 和 Harmony 两套环境。安卓环境主要用于效果比对和 RN Demo 的开发。
+搭建 Android 环境，用于效果比对和 RN Demo 的开发和 codegen 生成代码。
 
-> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)，将 Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
+> [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)
+
+将 ios / Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
 ## 搭建 Harmony 环境
 
@@ -55,6 +64,12 @@ DevEco Studio 版本：4.0.3.601
 OpenHarmony(API10): 4.0.10.11
 
 工程机版本：NOH-AN00 204.0.0.65(SP4C00E70R1P12)
+
+### 在 mac 上安装鸿蒙模拟器
+
+[mac 上使用模拟器](https://harmonyosdevelopertest.devccsrnd.hwcloudtest.cn:3087/cn/docs/doc-guides-V4/run_simulator-0000001582636200-V4)
+
+[!WARNING] 安装模拟器成功后，启动模拟器，如果已经启动了 android 模拟器，deveco 无法发现鸿蒙模拟器，解决方法是先把 android 模拟器关闭。原因是当前 hdc 命令支持 adb，android 模拟器启动后，就不会再搜索鸿蒙模拟器了，后续版本会修复。
 
 ### 拉取 RNOH 代码
 
@@ -94,9 +109,9 @@ RNOH 包含的内容：
 npx react-native@0.72.5 init AwesomeProject --version 0.72.5
 ```
 
-### Android
+### Android & ios
 
-创建工具会自动为 Android 和 iOS 生成工程底座，可直接使用。
+创建工具会自动为 Android 和 ios 生成工程底座，可直接使用。
 
 ### Harmony
 
@@ -104,15 +119,26 @@ npx react-native@0.72.5 init AwesomeProject --version 0.72.5
 
 ## 编译并运行 React Native 应用
 
+### ios
+
+在你的项目目录中运行 yarn ios 或者 react-native run-ios：
+
+```bash
+cd tester
+yarn ios
+# 或者
+react-native run-ios
+```
+
 ### Android
 
-确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行 yarn android 或者 yarn react-native run-android：
+确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行 yarn android 或者 react-native run-android：
 
 ```bash
 cd tester
 yarn android
 # 或者
-yarn react-native run-android
+react-native run-android
 ```
 
 ### Harmony

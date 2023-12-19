@@ -11,14 +11,16 @@
   - [搭建开发环境](zh-cn/environment.md)
 
 - 新架构迁移指南
+
   - [新架构介绍](zh-cn/new-architecture.md)
   - [TurboModules](zh-cn/turbomodule.md)
   - [Fabric 组件](zh-cn/fabric.md)
-  - [迁移三方库到新架构]()
-- 鸿蒙化与使用指南
+  - [迁移三方库到新架构](zh-cn/migration.md)
 
-  - [C++ 脚手架代码](zh-cn/cpp.md)
-  - [原生实现](zh-cn/native.md)
+- 鸿蒙原生侧代码
+
+  - [C++ NAPI 层](zh-cn/cpp.md)
+  - [原生层](zh-cn/native.md)
 
 - 发布
 
@@ -30,5 +32,6 @@
   - [发布三方库到 NPM 官方仓](zh-cn/npm.md)
 
 - 其他
+
   - [常见问题 Q&A](zh-cn/qa.md)
   - [AutoLink](zh-cn/autolink.md)

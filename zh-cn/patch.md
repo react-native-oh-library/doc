@@ -26,7 +26,7 @@
 
 #### harmony
 
-react-native-linear-gradient-openharmony 的 `package.json` 需要添加一个别名字段，这个别名就是原库的名字，用于给 metro 识别打包
+@react-native-oh-tpl/react-native-linear-gradient 的 `package.json` 需要添加一个 `"harmony": {"alias"}` 字段，这个别名就是原库的名字，用于给 metro 识别打包
 
 ```json
 ...
@@ -37,7 +37,13 @@ react-native-linear-gradient-openharmony 的 `package.json` 需要添加一个�
 
 当运行 harmony 平台时，metro 服务首先会进行别名查询，在每个三方库的 package.json 内查找有没有 `"harmony": {"alias"}` 字段。如有，将会和别名指向的库链接起来。
 
-在打包的时候，将不会从 `node_modules/react-native-linear-gradient` 里拿取 JS 代码，而是从 `node_modules/react-native-linear-gradient-openharmony` 内拿取代码，但使用时 import 的库名称并不会改变，这就实现了 harmony 平台和其他平台的解耦。harmony 平台因目前还不支持 Autolink，所以原生代码自行指定路径即可。
+在打包的时候，将不会从 `node_modules/react-native-linear-gradient` 里拿取 JS 代码，而是从 `node_modules/@react-native-oh-tpl/react-native-linear-gradient` 内拿取代码，但开发者使用时， import 的库名称并不会改变，如：
+
+```ts
+import LinearGradient from "react-native-linear-gradient";
+```
+
+这就实现了 harmony 平台和其他平台的解耦。harmony 平台因目前还不支持 Autolink，所以原生代码自行指定路径即可。
 
 ## 示例
 
@@ -47,7 +53,7 @@ react-native-linear-gradient-openharmony 的 `package.json` 需要添加一个�
 
 **对于 JS 代码：**仅保留有改动的部分，其余直接从原库里 import。
 
-首先需要在 github 仓库上新增 sig 分支，作为补丁版本的分支。
+首先需要在 github 仓库上新增 sig 分支，作为补丁版本的分支。sig 分支的建立规则和 harmony 分支一致，具体请参考 [开源管理](zh-cn/open-source.md) 章节
 
 > [!WARNING] 目录结构还是需要和原库保持一致！
 
@@ -77,13 +83,17 @@ react-native-linear-gradient-openharmony 的 `package.json` 需要添加一个�
   },
 ```
 
-> [!WARNING] 整改后需要在  `tester` 工程验证
+其余的 `package.json` 配置不变，尽量和 `harmony` 分支保持一致。
+
+> [!WARNING] 整改后需要在 `tester` 工程验证
 
 ## 已整改完成可参考的库
 
-| 原库名                         | 源码地址 |
-| ------------------------------ | --------------------------------- |
-| react-native-linear-gradient   | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-linear-gradient/tree/sig) |
-| @react-native-community/slider | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-slider/tree/sig)          |
-| @react-native-picker/picker    | [OpenHarmony SIG](https://github.com/react-native-oh-library/picker/tree/sig)                       |
-| react-native-gesture-handler   | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-gesture-handler/tree/sig) |
+| 原库名                                | 源码地址                                                                                            |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| react-native-linear-gradient          | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-linear-gradient/tree/sig) |
+| @react-native-community/slider        | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-slider/tree/sig)          |
+| @react-native-picker/picker           | [OpenHarmony SIG](https://github.com/react-native-oh-library/picker/tree/sig)                       |
+| react-native-gesture-handler          | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-gesture-handler/tree/sig) |
+| @react-native-masked-view/masked-view | [OpenHarmony SIG](https://github.com/react-native-oh-library/masked-view/tree/sig)                  |
+| react-native-fast-image               | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-fast-image/tree/sig)      |

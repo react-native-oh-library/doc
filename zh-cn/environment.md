@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # 搭建开发环境
 
 这篇文档会帮助你搭建基本的 React-Native 开发环境。
@@ -57,7 +59,7 @@ ios 环境主要用于效果比对和 RN Demo 的开发。因为 arkui 对标 sw
 
 Harmony 环境需要注意 IDE 版本、OpenHarmony SDK 版本和手机版本是否符合要求。
 
-- 2023.10.30：
+- 2023.10.30 版本：
 
 DevEco Studio 版本：4.0.3.601
 

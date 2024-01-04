@@ -1,7 +1,7 @@
 <!-- _coverpage.md -->
 ![logo](./img/react.svg ':size=20%')
 
-# React Native OpenHarmony 三方库文档
+# React Native OpenHarmony 三方库开发文档
 
 > React Native三方库鸿蒙化入门、环境配置、上手开发
 

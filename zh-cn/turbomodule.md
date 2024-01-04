@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # TurboModules
 
 Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 与 Native 交互的轻量级框架。TurboModules 本质上的作用是导出一系列的 Native 方法供 JS 使用。

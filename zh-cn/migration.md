@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # 迁移三方库到新框架
 
 > [!tip] 迁移到新框架分为两步：JS 代码迁移和原生代码迁移。这里只介绍 JS 代码的迁移，Android 和 iOS 原生代码的迁移与鸿蒙化无关，按需自行学习。

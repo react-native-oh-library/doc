@@ -1,10 +1,12 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # 简介
 
-> 欢迎开始 React-Native 的旅程！如果你在找如何搭建环境的文档，请移步[搭建开发环境](/zh-cn/environment.md)
+本文档为React Native OpenHarmony 三方库开发调试文档。如果你在找如何搭建环境的文档，请移步[搭建开发环境](/zh-cn/environment.md)
 
 ## 概述
 
-该文档旨在帮助开发者快速上手 React-Native 开发，并了解 React-Naitve 三方库的开发和鸿蒙化流程。
+该文档旨在帮助开发者快速上手 React Native OpenHarmony 三方库开发，帮助开发者了解三方库的开发和鸿蒙化流程。
 
 文档地址：[https://react-native-oh-library.gitee.io/docs](https://react-native-oh-library.gitee.io/docs)
 

@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # 发布三方库到 Github Packages
 
 > [!ATTENTION] 请确保本地可以成功打包 tgz 再来发布

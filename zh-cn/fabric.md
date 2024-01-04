@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # Fabric 组件
 
 Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI 组件。

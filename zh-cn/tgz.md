@@ -1,3 +1,5 @@
+> [!WARNING] 本文档为非公开文档，仅用于三方库使用和开发指导，不涉及任何 React Native OpenHarmony 框架的信息，且会随着 React Native OpenHarmony 框架持续迭代更新，当前版本不代表最终展示版本。
+
 # 本地打包三方库
 
 打包的目的是获得 `.tgz` 压缩包，让开发者能在本地通过 npm/yarn 引入三方库依赖。

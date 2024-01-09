@@ -31,6 +31,11 @@
   - [发布三方库到 Github Packages](zh-cn/github-package.md)
   - [发布三方库到 NPM 官方仓](zh-cn/npm.md)
 
+- checklist
+
+  - [发布 release checklist](zh-cn/repositories-release-checklist.md)
+  - [usage-docs checklist](zh-cn/usage-docs-checklist.md)
+
 - 其他
 
   - [常见问题 Q&A](zh-cn/qa.md)

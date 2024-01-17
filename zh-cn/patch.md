@@ -4,29 +4,29 @@
 
 ## 背景
 
-1130 前鸿蒙化后的 React-Native 三方库将 harmony 平台的修改和 Android、iOS 等平台的代码放在一起，然后覆盖原库安装。
+1130 前鸿蒙化后的 React-Native 三方库将 HarmonyOS 平台的修改和 Android、iOS 等平台的代码放在一起，然后覆盖原库安装。
 
 这样做会面临三个问题：
 
-1. Android 和 iOS 等其他平台需要依靠社区维护，有些库只支持老架构或只支持某个版本以下较老的 React-Native，而 harmony 只支持新架构和较新的 React-Native。如果放在一起无法保证一个库下，各个支持平台的一致性；
+1. Android 和 iOS 等其他平台需要依靠社区维护，有些库只支持老架构或只支持某个版本以下较老的 React-Native，而 HarmonyOS 只支持新架构和较新的 React-Native。如果放在一起无法保证一个库下，各个支持平台的一致性；
 
-2. 外部厂商希望 Android、iOS 和 harmony 能在同一 React-Native 工程项目内，不需要另外新建针对 harmony 平台的 React-Native 工程。而大部分外部厂商在 Android、iOS 平台用的还是老架构版本的三方库，对于一些我们适配了 harmony 平台的老架构三方库，我们既无法保证 Android、iOS 等其他平台能正常在新架构运行，也无法保证在老架构还能运行；
+2. 外部厂商希望 Android、iOS 和 HarmonyOS 能在同一 React-Native 工程项目内，不需要另外新建针对 HarmonyOS 平台的 React-Native 工程。而大部分外部厂商在 Android、iOS 平台用的还是老架构版本的三方库，对于一些我们适配了 HarmonyOS 平台的老架构三方库，我们既无法保证 Android、iOS 等其他平台能正常在新架构运行，也无法保证在老架构还能运行；
 
 3. 在开源之后需要在 Gitee 建仓，很难跟进 Github 的社区版本更新，无法直接 fork 也无法提 PR，将其他平台的代码包含进来对回合社区无任何意义。
 
 ## 变更项及原理
 
-基于上述原因，经过各方面的考虑，1130 之后会对已适 harmony 平台的 React-Native 三方库进行文件结构整改，将覆盖原库的方式变更为打补丁的方式。
+基于上述原因，经过各方面的考虑，1130 之后会对已适 HarmonyOS 平台的 React-Native 三方库进行文件结构整改，将覆盖原库的方式变更为打补丁的方式。
 
-也就是说，将 harmony 平台的代码解耦出来，变成一个独立的 npm 包，和原来的 npm 包是依赖关系。当使用 metro 服务打包时，会根据平台和别名判断，需要去 node_modules 下哪个文件夹里取代码。
+也就是说，将 HarmonyOS 平台的代码解耦出来，变成一个独立的 npm 包，和原来的 npm 包是依赖关系。当使用 metro 服务打包时，会根据平台和别名判断，需要去 node_modules 下哪个文件夹里取代码。
 
-以 react-native-linear-gradient 为例，官方的 npm 包名是 react-native-linear-gradient，harmony 平台补丁的 npm 包名命名为 react-native-linear-gradient-openharmony。
+以 react-native-linear-gradient 为例，官方的 npm 包名是 react-native-linear-gradient，HarmonyOS 平台补丁的 npm 包名命名为 @react-native-oh-tpl/react-native-linear-gradient。
 
 #### Android/iOS
 
 当在 React-Native 项目内运行 Android 或 iOS 平台时，与正常引入该三方库没有区别，JS 端的代码和原生代码都会从 `node_modules/react-native-linear-gradient` 里查询。
 
-#### harmony
+#### HarmonyOS
 
 @react-native-oh-tpl/react-native-linear-gradient 的 `package.json` 需要添加一个 `"harmony": {"alias"}` 字段，这个别名就是原库的名字，用于给 metro 识别打包
 
@@ -37,7 +37,7 @@
 }
 ```
 
-当运行 harmony 平台时，metro 服务首先会进行别名查询，在每个三方库的 package.json 内查找有没有 `"harmony": {"alias"}` 字段。如有，将会和别名指向的库链接起来。
+当运行 HarmonyOS 平台时，metro 服务首先会筛选出所有含有 `harmony` 文件夹的三方库，然后再进行别名查询，在筛选出来的三方库中的 package.json 内查找有没有 `"harmony": {"alias"}` 字段。如有，将会和别名指向的库链接起来。
 
 在打包的时候，将不会从 `node_modules/react-native-linear-gradient` 里拿取 JS 代码，而是从 `node_modules/@react-native-oh-tpl/react-native-linear-gradient` 内拿取代码，但开发者使用时， import 的库名称并不会改变，如：
 
@@ -45,13 +45,13 @@
 import LinearGradient from "react-native-linear-gradient";
 ```
 
-这就实现了 harmony 平台和其他平台的解耦。harmony 平台因目前还不支持 Autolink，所以原生代码自行指定路径即可。
+这就实现了 HarmonyOS 平台和其他平台的解耦。HarmonyOS 平台因目前还不支持 Autolink，所以原生代码自行指定路径即可。
 
 ## 示例
 
-> [!tip] 补丁包的文件结构并没有太大变化，只是将 Android 和 ios 的原生部分、部分 JS 代码和一些无关项（example 工程等）剔除了，主要由两个部分组成：harmony 原生代码和修改后的 JS 代码。
+> [!tip] 补丁包的文件结构并没有太大变化，只是将 Android 和 ios 的原生部分、部分 JS 代码和一些无关项（example 工程等）剔除了，主要由两个部分组成：HarmonyOS 原生代码和修改后的 JS 代码。
 
-**对于原生代码：**仅保留 harmony 平台的部分，即 `harmony` 文件夹。
+**对于原生代码：**仅保留 HarmonyOS 平台的部分，即 `harmony` 文件夹。
 
 **对于 JS 代码：**仅保留有改动的部分，其余直接从原库里 import。
 

@@ -8,7 +8,7 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
 
 在开发 Fabric 组件前，需要先创建一个 JavaScript 接口描述文件。之后 Codegen 会根据这个文件创建一些 C++ 脚手架代码，用于将部分组件逻辑（比如调用原生平台接口能力）与 React Native 结合起来。C++ 代码在各个平台都是一样的，只要组件能够与生成的 C++ 代码连接起来，就可以导入到 App 并运行。
 
-因为 Harmony 平台暂时还没有 codegen 工具，所以我们需要使用 Android 平台的 codegen 来生成相关的 C++ 代码，然后复制到 Harmony 平台使用。
+因为 HarmonyOS 平台暂时还没有 codegen 工具，所以我们需要使用 Android 平台的 codegen 来生成相关的 C++ 代码，然后复制到 HarmonyOS 平台使用。
 
 ## 如何创建 Fabric 组件
 
@@ -29,7 +29,7 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
 └── RTNCenteredText
     ├── android（Android 的原生实现代码）
     ├── ios（iOS 的原生实现代码）
-    ├── harmony（Harmony 的原生实现代码）
+    ├── harmony（HarmonyOS 的原生实现代码）
     └── src （js/ts代码）
 ```
 
@@ -279,9 +279,9 @@ ReactPackage 接口的用途是让 React Native 为使用 App 中的 ViewManager
 
 Codegen 会在 App 编译的时候自动运行。
 
-#### Harmony
+#### HarmonyOS
 
-Harmony 平台暂时还没有 Codegen，所以我们需要手动运行 Android 的 Codegen，然后把生成的代码复制过来使用。
+HarmonyOS 平台暂时还没有 Codegen，所以我们需要手动运行 Android 的 Codegen，然后把生成的代码复制过来使用。
 
 > [!WARNING] 请务必先把 Android 的 Codegen 配置好再执行以下操作
 
@@ -326,7 +326,7 @@ codegen
 └── schema.json
 ```
 
-`codegen/jni/react/renderer/components/RTNCenteredText` 目录下的代码是 Harmony 需要的。将这些代码复制到 `harmony/rtn-centered-text/src/main/cpp` 文件夹下，并修改一下各文件 "include" 的路径。
+`codegen/jni/react/renderer/components/RTNCenteredText` 目录下的代码是 HarmonyOS 需要的。将这些代码复制到 `harmony/rtn-centered-text/src/main/cpp` 文件夹下，并修改一下各文件 "include" 的路径。
 
 如 `ComponentDescriptor.h`
 
@@ -642,15 +642,15 @@ public class RTNCenteredTextPackage implements ReactPackage {
 
 新增的代码实例化了一个 RTNCenteredTextManager 对象，用于让 React Natve 运行时渲染 Fabric 组件。
 
-#### Harmony
+#### HarmonyOS
 
-Harmony 平台中 Fabric 组件的原生代码必须包含以下三个部分：
+HarmonyOS 平台中 Fabric 组件的原生代码必须包含以下三个部分：
 
 1. 创建用于实现组件的 RTNCenteredText.ets
 2. 创建 index.ets
 3. 修改 oh-package.json5，hvigorfile.ts，module.json5
 
-Harmony 第三方库目录文件结构应为如下：
+HarmonyOS 第三方库目录文件结构应为如下：
 
 ```md
 harmony
@@ -731,7 +731,7 @@ export struct RTNCenteredText {
 
 <!-- tabs:end -->
 
-该部分是 RTNCenteredText 的 Harmony 原生实现。
+该部分是 RTNCenteredText 的 HarmonyOS 原生实现。
 
 创建 `index.ets`
 
@@ -810,9 +810,9 @@ yarn add ../RTNCenteredText
 1. 打开 android/gradle.properties；
 2. 滑到文件底部，将 newArchEnabled 的值从 false 修改为 true。
 
-#### Harmony
+#### HarmonyOS
 
-> [!tip] 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
+> [!tip] 待完善能力：HarmonyOS 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 React-Native 项目里的鸿蒙工程 `harmony`
 
@@ -887,73 +887,28 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 打开 `entry/src/main/ets/pages/Index.ets`，添加：
 
 ```diff
-import { ComponentBuilderContext } from 'rnoh';
-import { RNApp, RNAbility, AnyJSBundleProvider, MetroJSBundleProvider, ResourceJSBundleProvider } from 'rnoh'
-import { createRNPackages } from '../RNPackagesFactory'
+...
 import { SampleView, SAMPLE_VIEW_TYPE, PropsDisplayer } from "rnoh-sample-package"
-import { RTNCenteredText, CENTERED_TEXT_TYPE } from "rnoh-centered-text"
-
++ import { RTNCenteredText, CENTERED_TEXT_TYPE } from "rnoh-centered-text"
 
 @Builder
-function CustomComponentBuilder(ctx: ComponentBuilderContext) {
-  if (ctx.descriptor.type === SAMPLE_VIEW_TYPE) {
+export function CustomComponentBuilder(ctx: ComponentBuilderContext) {
+  if (ctx.componentName === SAMPLE_VIEW_TYPE) {
     SampleView({
       ctx: ctx.rnohContext,
-      tag: ctx.descriptor.tag,
+      tag: ctx.tag,
       buildCustomComponent: CustomComponentBuilder
     })
-  } else if (ctx.descriptor.type === PropsDisplayer.NAME) {
-    PropsDisplayer({
-      ctx: ctx.rnohContext,
-      tag: ctx.descriptor.tag
-    })
-  } else if (ctx.descriptor.type === CENTERED_TEXT_TYPE) {
-    RTNCenteredText({
-      ctx: ctx.rnohContext,
-      tag: ctx.descriptor.tag
-    })
   }
++ else if (ctx.componentName === CENTERED_TEXT_TYPE) {
++   RTNCenteredText({
++     ctx: ctx.rnohContext,
++     tag: ctx.tag,
++   })
++ }
+ ...
 }
-
-@Entry
-@Component
-struct Index {
-  @StorageLink('RNAbility') rnAbility: RNAbility | undefined = undefined
-  @State shouldShow: boolean = false
-
-  aboutToAppear() {
-    setTimeout(() => {
-      // Debugger don't work from the get-go, hence this artificial delay.
-      this.shouldShow = true
-    }, 1000)
-  }
-
-  onBackPress(): boolean | undefined {
-    // NOTE: this is required since `Ability`'s `onBackPressed` function always
-    // terminates or puts the app in the background, but we want Ark to ignore it completely
-    // when handled by RN
-    return this.rnAbility?.onBackPress();
-  }
-
-  build() {
-    Column() {
-      if (this.rnAbility && this.shouldShow) {
-        RNApp({
-          rnInstanceConfig: { createRNPackages },
-          initialProps: { "foo": "bar" } as Record<string, string>,
-          appKey: "app_name",
-          buildCustomComponent: CustomComponentBuilder,
-          jsBundleProvider: new AnyJSBundleProvider([
-            new MetroJSBundleProvider(),
-            new ResourceJSBundleProvider(this.rnAbility.context.resourceManager, 'hermes_bundle.hbc'),
-            new ResourceJSBundleProvider(this.rnAbility.context.resourceManager, 'bundle.harmony.js')]),
-        })
-      }
-    }
-    .height('100%')
-    .width('100%')
-  }
-}
+...
 ```
 
 #### JavaScript

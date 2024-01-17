@@ -27,7 +27,7 @@ Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 
 └── RTNCalculator
     ├── android（Android 的原生实现代码）
     ├── ios（iOS 的原生实现代码）
-    ├── harmony（Harmony 的原生实现代码）
+    ├── harmony（HarmonyOS 的原生实现代码）
     └── src （js/ts代码）
 ```
 
@@ -89,7 +89,7 @@ export default TurboModuleRegistry.get<Spec>("RTNCalculator") as Spec | null;
 
 有一些配置文件在 Android/iOS 平台是通用的，而有的仅能在某一平台使用。
 
-Harmony 平台暂时不支持 Codegen，TurboModule 的 C++ 代码需要自行编写。
+HarmonyOS 平台暂时不支持 Codegen，TurboModule 的 C++ 代码需要自行编写。
 
 #### Shared
 
@@ -266,9 +266,9 @@ ReactPackage 接口的用途是让 React Native 为使用 App 中的 ViewManager
 
 Codegen 会在 App 编译的时候自动运行。
 
-#### Harmony
+#### HarmonyOS
 
-> [!tip] 待完善能力：因为 Harmony 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
+> [!tip] 待完善能力：因为 HarmonyOS 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
 
 在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`CalculatorTurboModule.h`，`CalculatorTurboModule.cpp`。
 
@@ -511,16 +511,16 @@ public class CalculatorPackage extends TurboReactPackage {
 
 这就是 Android 平台原生代码的最后一部分，它定义了 TurboReactPackage 对象，这个对象将用于 App 的模块加载。
 
-#### Harmony
+#### HarmonyOS
 
-Harmony 平台上 Turbo Native Module 的原生代码需执行如下步骤：
+HarmonyOS 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 
 1. 创建用于实现模块的 CalculatorModule.ts
 2. 创建 CalculatorPackage.ts
 3. 创建 index.ets 和 ts.ts
 4. 修改 oh-package.json5，hvigorfile.ts，module.json5
 
-Harmony 第三方库目录文件结构应为如下：
+HarmonyOS 第三方库目录文件结构应为如下：
 
 ```md
 harmony
@@ -596,7 +596,7 @@ export class CalculatorPackage extends RNPackage {
 
 <!-- tabs:end -->
 
-这就是 Harmony 平台原生代码的最后一部分，它定义了 RNPackage 对象，这个对象将用于 App 的模块加载。
+这就是 HarmonyOS 平台原生代码的最后一部分，它定义了 RNPackage 对象，这个对象将用于 App 的模块加载。
 
 创建 `ts.ts` 和 `index.ets`
 
@@ -686,11 +686,11 @@ yarn add ../RTNCalculator
 1. 打开 android/gradle.properties；
 2. 滑到文件底部，将 newArchEnabled 的值从 false 修改为 true。
 
-#### Harmony
+#### HarmonyOS
 
-> [!tip] 待完善能力：Harmony 平台目前暂时不支持 AutoLink，所以需要自行配置。
+> [!tip] 待完善能力：HarmonyOS 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
-首先使用 DevEco Studio 打开 React-Native 项目里的鸿蒙工程 `harmony`
+首先使用 DevEco Studio 打开 React-Native 项目里的 HarmonyOS 工程 `harmony`
 
 ##### 引入原生端代码
 

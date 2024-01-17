@@ -53,11 +53,11 @@ ios 环境主要用于效果比对和 RN Demo 的开发。因为 arkui 对标 sw
 
 将 ios / Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
-## 搭建 Harmony 环境
+## 搭建 HarmonyOS 环境
 
 ### IDE 和手机版本
 
-Harmony 环境需要注意 IDE 版本、OpenHarmony SDK 版本和手机版本是否符合要求。
+HarmonyOS 环境需要注意 IDE 版本、OpenHarmony SDK 版本和手机版本是否符合要求。
 
 - 2023.10.30 版本：
 
@@ -66,6 +66,14 @@ DevEco Studio 版本：4.0.3.601
 OpenHarmony(API10): 4.0.10.11
 
 工程机版本：NOH-AN00 204.0.0.65(SP4C00E70R1P12)
+
+- 2023.12.30 版本：
+
+DevEco Studio 版本：4.1.3.401
+
+OpenHarmony(API11): 4.1.0.36
+
+工程机版本：NOH-AN00 204.1.0.60(SP10C00E60R1P17)
 
 ### 在 mac 上安装鸿蒙模拟器
 
@@ -79,11 +87,11 @@ RNOH 包含的内容：
 
 1. react-native-harmony：react-native 的 Hamrony 拓展；
 2. react-native-harmony-cli：react-native-cli 的 Hamrony 拓展；
-3. tester：配置好 Harmony 支持的 React-Native 项目；
+3. tester：配置好 HarmonyOS 支持的 React-Native 项目；
 
 - 绿区：
 
-拉取[ReactNative_OpenHarmony](https://codehub-g.huawei.com/l00496999/ReactNative_OpenHarmony/home)项目
+拉取[ReactNative_OpenHarmony](https://codehub-g.huawei.com/ReactNativeOpenHarmony/rnoh/home)项目
 
 - 蓝区：
 
@@ -91,13 +99,15 @@ RNOH 包含的内容：
 
 按需选择分支：
 
-`master` 是最新的 RNOH 主干分支，包含了 RNOH 的核心 SDK；
+`swm_main` / `main` 是SWM团队的主干分支；
 
-`third_party` 是在 `master` 的基础上，加入了 React-Native 三方库。
+`master` / `master_green` 是HUAWEI团队的主干分支；
+
+`xxx_third_party` 是在 `xxx` 的基础上，加入了 React-Native 三方库。
 
 ## 创建新项目
 
-> [!tip] 待完善能力：目前 harmony 还不支持新建项目的工具，需要手动引入，可跳过此步直接使用 RNOH 的 tester 项目。
+> [!tip] 待完善能力：目前 HarmonyOS 还不支持新建项目的工具，需要手动引入，可跳过此步直接使用 RNOH 的 tester 项目。
 
 使用 React Native 内建的命令行工具来创建一个名为 "AwesomeProject" 的新项目。这个命令行工具不需要安装，可以直接用 node 自带的 npx 命令来使用：
 
@@ -115,9 +125,9 @@ npx react-native@0.72.5 init AwesomeProject --version 0.72.5
 
 创建工具会自动为 Android 和 ios 生成工程底座，可直接使用。
 
-### Harmony
+### HarmonyOS
 
-如果要使用上述创建的 AwesomeProject，需要自行引入一个 harmony 工程（一般不推荐 Harmony 平台自行新建项目，可以直接使用 RNOH 提供的示例项目 `tester`。）
+如果要使用上述创建的 AwesomeProject，需要自行引入一个 harmony 工程（一般不推荐 HarmonyOS 平台自行新建项目，可以直接使用 RNOH 提供的示例项目 `tester`。）
 
 ## 编译并运行 React Native 应用
 

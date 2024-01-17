@@ -26,7 +26,7 @@ JavaScript Specs 是每个 Native Module 提供的方法的真实来源，定义
 
 新架构要求必须使用强类型风格语言声明 JavaScript 接口（Flow 和 TypeScript 皆可）。Codegen 会根据这些接口声明来生成强类型的语言，其中包括 C++、Objective-C 和 Java。
 
-> [!tip] 目前，harmony 平台的 codegen 还在开发当中。
+> [!tip] 目前，HarmonyOS 平台的 codegen 还在开发当中。
 
 #### Turbo Native Modules
 
@@ -170,8 +170,8 @@ export default codegenNativeComponent<NativeProps>(
 
 请参考官方的[新架构迁移指南](https://reactnative.cn/docs/new-architecture-intro)
 
-### harmony
+### HarmonyOS
 
-harmony 平台只支持新架构，所以并没有迁移的说法。
+HarmonyOS 平台只支持新架构，所以并没有迁移的说法。
 
 关于鸿蒙原生代码，请参考鸿蒙原生侧代码中的 [C++ NAPI 层](zh-cn/cpp.md) 和 [原生层](zh-cn/native.md) 章节。

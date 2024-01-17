@@ -259,10 +259,10 @@ ext.applyNativeModulesAppBuildGradle = { Project project, String root = null ->
 
 这 3 处变化使得 Android 的 link 过程自动化，同时避免了原生代码的改动
 
-## Harmony 平台的 Link
+## HarmonyOS 平台的 Link
 
-### Harmony Link
+### HarmonyOS Link
 
-### Harmony AutoLink
+### HarmonyOS AutoLink
 
-目前 Harmony 平台的 AutoLink 还在规划阶段，预计会在未来推出。
+目前 HarmonyOS 平台的 AutoLink 还在规划阶段，预计会在未来推出。

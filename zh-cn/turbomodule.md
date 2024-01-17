@@ -25,10 +25,10 @@ Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 
 ```md
 .
 └── RTNCalculator
-├── android（Android 的原生实现代码）
-├── ios（iOS 的原生实现代码）
-├── harmony（Harmony 的原生实现代码）
-└── src （js/ts 代码）
+    ├── android（Android 的原生实现代码）
+    ├── ios（iOS 的原生实现代码）
+    ├── harmony（Harmony 的原生实现代码）
+    └── src （js/ts代码）
 ```
 
 ### 2. 声明 JavaScript 接口
@@ -158,12 +158,12 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 android
 ├── build.gradle
 └── src
-└── main
-├── AndroidManifest.xml
-└── java
-└── com
-└── rtncalculator
-└── CalculatorPackage.java
+    └── main
+        ├── AndroidManifest.xml
+        └── java
+            └── com
+                └── rtncalculator
+                    └── CalculatorPackage.java
 ```
 
 首先，在 `android` 目录创建 `build.gradle` 文件，并配置以下内容：
@@ -275,20 +275,20 @@ Codegen 会在 App 编译的时候自动运行。
 ```md
 harmony
 └── rtn-calculator
-├── src
-│ └── main
-│ ├── cpp
-│ │ ├── CalculatorPacakge.h
-│ │ ├── CMakeLists.txt
-│ │ ├── CalculatorTurboModule.cpp
-│ │ └── CalculatorTurboModule.h
-│ ├──ets
-│ └── modules.json5  
- ├── build-profile.json5
-├── hvigorfile.ts
-├── index.ets
-├── oh-package.json5
-└── ts.ts
+    ├── src
+    │   └── main
+    │       ├── cpp
+    │       │   ├── CalculatorPacakge.h
+    │       │   ├── CMakeLists.txt
+    │       │   ├── CalculatorTurboModule.cpp
+    │       │   └── CalculatorTurboModule.h
+    │       ├──ets
+    │       └── modules.json5         
+    ├── build-profile.json5
+    ├── hvigorfile.ts
+    ├── index.ets
+    ├── oh-package.json5
+    └── ts.ts
 ```
 
 <!-- tabs:start -->
@@ -395,16 +395,16 @@ Android 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 Android 第三方库目录文件结构应为如下：
 
 ```md
-android
+ android
 ├── build.gradle
 └── src
-└── main
-├── AndroidManifest.xml
-└── java
-└── com
-└── rtncalculator
-├── CalculatorModule.java
-└── CalculatorPackage.java
+    └── main
+        ├── AndroidManifest.xml
+        └── java
+            └── com
+                └── rtncalculator
+                    ├── CalculatorModule.java
+                    └── CalculatorPackage.java
 ```
 
 创建 CalculatorModule.java
@@ -525,22 +525,22 @@ Harmony 第三方库目录文件结构应为如下：
 ```md
 harmony
 └── rtn-calculator
-├── src
-│ └── main
-│ ├── cpp
-│ │ ├── CalculatorPacakge.h
-│ │ ├── CMakeLists.txt
-│ │ ├── CalculatorTurboModule.cpp
-│ │ └── CalculatorTurboModule.h
-│ ├──ets
-│ │ ├── CalculatorModule.ts
-│ │ └── CalculatorPackage.ts
-│ └── modules.json5  
- ├── build-profile.json5
-├── hvigorfile.ts
-├── index.ets
-├── oh-package.json5
-└── ts.ts
+    ├── src
+    │   └── main
+    │       ├── cpp
+    │       │   ├── CalculatorPacakge.h
+    │       │   ├── CMakeLists.txt
+    │       │   ├── CalculatorTurboModule.cpp
+    │       │   └── CalculatorTurboModule.h
+    │       ├──ets
+    │       │   ├── CalculatorModule.ts
+    │       │   └── CalculatorPackage.ts
+    │       └── modules.json5         
+    ├── build-profile.json5
+    ├── hvigorfile.ts
+    ├── index.ets
+    ├── oh-package.json5
+    └── ts.ts
 ```
 
 创建 `CalculatorModule.ts`

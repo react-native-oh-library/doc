@@ -162,12 +162,12 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 android
 ├── build.gradle
 └── src
-└── main
-├── AndroidManifest.xml
-└── java
-└── com
-└── rtncenteredtext
-└── RTNCenteredTextPackage.java
+    └── main
+        ├── AndroidManifest.xml
+        └── java
+            └── com
+                └── rtncenteredtext
+                    └── RTNCenteredTextPackage.java
 ```
 
 首先，在 `android` 目录创建 `build.gradle` 文件，并配置以下内容：
@@ -301,28 +301,28 @@ cd android
 ```md
 codegen
 ├── java
-│ └── com
-│ └── facebook
-│ └── react
-│ └── viewmanagers
-│ ├── RTNCenteredTextManagerDelegate.java
-│ └── RTNCenteredTextManagerInterface.java
+│   └── com
+│       └── facebook
+│           └── react
+│               └── viewmanagers
+│                   ├── RTNCenteredTextManagerDelegate.java
+│                   └── RTNCenteredTextManagerInterface.java
 ├── jni
-│ ├── Android.mk
-│ ├── CMakeLists.txt
-│ ├── RTNCenteredText-generated.cpp
-│ ├── RTNCenteredText.h
-│ └── react
-│ └── renderer
-│ └── components
-│ └── RTNCenteredText
-│ ├── ComponentDescriptors.h
-│ ├── EventEmitters.cpp
-│ ├── EventEmitters.h
-│ ├── Props.cpp
-│ ├── Props.h
-│ ├── ShadowNodes.cpp
-│ └── ShadowNodes.h
+│   ├── Android.mk
+│   ├── CMakeLists.txt
+│   ├── RTNCenteredText-generated.cpp
+│   ├── RTNCenteredText.h
+│   └── react
+│       └── renderer
+│           └── components
+│               └── RTNCenteredText
+│                   ├── ComponentDescriptors.h
+│                   ├── EventEmitters.cpp
+│                   ├── EventEmitters.h
+│                   ├── Props.cpp
+│                   ├── Props.h
+│                   ├── ShadowNodes.cpp
+│                   └── ShadowNodes.h
 └── schema.json
 ```
 
@@ -342,29 +342,45 @@ codegen
 ```md
 harmony
 └── rtn-centered-text
-├── src
-│ └── main
-│ ├── cpp
-│ │ ├── ComponentDescriptors.h
-│ │ ├── EventEmitters.cpp
-│ │ ├── EventEmitters.h
-│ │ ├── Props.cpp
-│ │ ├── Props.h
-│ │ ├── ShadowNodes.cpp
-│ │ ├── ShadowNodes.h
-│ │ ├── CenteredTextJSIBinder.h
-│ │ ├── CenteredTextNapiBinder.h
-│ │ └── CenteredTextPackage.h
-│ ├──ets
-│ └── modules.json5  
- ├── build-profile.json5
-├── hvigorfile.ts
-├── index.ets
-├── oh-package.json5
-└── ts.ts
+    ├── src
+    │   └── main
+    │       ├── cpp
+    │       │   ├── CMakeLists.txt
+    │       │   ├── ComponentDescriptors.h
+    │       │   ├── EventEmitters.cpp
+    │       │   ├── EventEmitters.h
+    │       │   ├── Props.cpp
+    │       │   ├── Props.h
+    │       │   ├── ShadowNodes.cpp
+    │       │   ├── ShadowNodes.h
+    │       │   ├── CenteredTextJSIBinder.h
+    │       │   ├── CenteredTextNapiBinder.h
+    │       │   └── CenteredTextPackage.h
+    │       ├──ets
+    │       └── modules.json5         
+    ├── build-profile.json5
+    ├── hvigorfile.ts
+    ├── index.ets
+    ├── oh-package.json5
+    └── ts.ts
 ```
 
-**CenteredTextJSIBinder.h**
+<!-- tabs:start -->
+
+#### **CMakeLists.txt**
+
+```c
+# the minimum version of CMake
+cmake_minimum_required(VERSION 3.13)
+set(CMAKE_VERBOSE_MAKEFILE on)
+
+file(GLOB rnoh_centered_text_SRC CONFIGURE_DEPENDS *.cpp)
+add_library(rnoh_centered_text SHARED ${rnoh_centered_text_SRC})
+target_include_directories(rnoh_centered_text PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(rnoh_centered_text PUBLIC rnoh)
+```
+
+<!-- tabs:end -->
 
 <!-- tabs:start -->
 
@@ -388,8 +404,6 @@ class CenteredTextJSIBinder : public ViewComponentJSIBinder {
 <!-- tabs:end -->
 
 JSI Binder 的作用是桥接 JS 和 C++，将属性从 JS 端传递到 C++ 端。
-
-**CenteredTextNapiBinder.h**
 
 <!-- tabs:start -->
 
@@ -420,8 +434,6 @@ public:
 <!-- tabs:end -->
 
 Napi Binder 的作用是桥接 C++ 和 ArkTs ，将属性从 C++ 端传递到 ArkTs 端。
-
-**CenteredTextPackage.h**
 
 <!-- tabs:start -->
 
@@ -474,17 +486,15 @@ Android 第三方库目录文件结构应为如下：
 android
 ├── build.gradle
 └── src
-└── main
-├── AndroidManifest.xml
-└── java
-└── com
-└── rtncenteredtext
-├── RTNCenteredText.java
-├── RTNCenteredTextManager.java
-└── RTNCenteredTextPackage.java
+    └── main
+        ├── AndroidManifest.xml
+        └── java
+            └── com
+                └── rtncenteredtext
+                    ├── RTNCenteredText.java
+                    ├── RTNCenteredTextManager.java
+                    └── RTNCenteredTextPackage.java
 ```
-
-**RTNCenteredText.java**
 
 <!-- tabs:start -->
 
@@ -528,8 +538,6 @@ public class RTNCenteredText extends TextView {
 <!-- tabs:end -->
 
 这个类表示的是原生视图，将由 Android 渲染到屏幕上。它继承了 TextView 并且调用私有方法 configureComponent() 来配置自身的基本参数。
-
-**RTNCenteredTextManager.java**
 
 <!-- tabs:start -->
 
@@ -647,29 +655,28 @@ Harmony 第三方库目录文件结构应为如下：
 ```md
 harmony
 └── rtn-centered-text
-├── src
-│ └── main
-│ ├── cpp
-│ │ ├── ComponentDescriptors.h
-│ │ ├── EventEmitters.cpp
-│ │ ├── EventEmitters.h
-│ │ ├── Props.cpp
-│ │ ├── Props.h
-│ │ ├── ShadowNodes.cpp
-│ │ ├── ShadowNodes.h
-│ │ ├── CenteredTextJSIBinder.h
-│ │ ├── CenteredTextNapiBinder.h
-│ │ └── CenteredTextPackage.h
-│ ├──ets
-│ │ └── RTNCenteredText.ets
-│ └── modules.json5  
- ├── build-profile.json5
-├── hvigorfile.ts
-├── oh-package.json5
-└── index.ets
+    ├── src
+    │   └── main
+    │       ├── cpp
+    │       │   ├── CMakeLists.txt
+    │       │   ├── ComponentDescriptors.h
+    │       │   ├── EventEmitters.cpp
+    │       │   ├── EventEmitters.h
+    │       │   ├── Props.cpp
+    │       │   ├── Props.h
+    │       │   ├── ShadowNodes.cpp
+    │       │   ├── ShadowNodes.h
+    │       │   ├── CenteredTextJSIBinder.h
+    │       │   ├── CenteredTextNapiBinder.h
+    │       │   └── CenteredTextPackage.h
+    │       ├──ets
+    │       │   └── RTNCenteredText.ets
+    │       └── modules.json5         
+    ├── build-profile.json5
+    ├── hvigorfile.ts
+    ├── oh-package.json5
+    └── index.ets
 ```
-
-**RTNCenteredText.ets**
 
 <!-- tabs:start -->
 

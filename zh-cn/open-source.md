@@ -14,20 +14,21 @@
 
 ![create repo](../img/create_repo.png)
 
-点击 "View all branches" 修改分支名称为 `harmony`，作为仓库的默认分支。开发时，请另外新建开发分支（推荐统一为 `dev`）。
+点击 "View all branches" 修改分支名称为 `sig`，作为仓库的默认分支。开发时，请另外新建开发分支（推荐统一为 `sig_dev`）。
 
 ![branch](../img/branch.png)
 
-如果发现落后原库默认分支，可点击 `Sync fork` 来跟进，请在开发分支进行此操作。sync 之后要注意原库版本有没有变更。
+## HarmonyOS 补丁形式整改
+
+请查阅 [三方库文件结构整改（补丁形式）](zh-cn/patch.md)
 
 ## 发布
 
 发布步骤：
 
 1. 确保已通过自检测试，并完成代码格式检查；
-2. 将变更合入 `harmony` 分支；
-3. 发布新的 Tag 和 Release（github 操作）；
-4. 发布新的 NPM Package（本地操作）。
+2. 将变更合入 `sig` 分支；
+3. 发布新的 Tag 和 Release（github 上操作）；
 
 ### 代码格式检查
 
@@ -43,9 +44,9 @@
 
 其中 x.x.x 为基版本，即基于原库哪一个版本；y.y.y 为鸿蒙化过程中自行定义的临时版本号。
 
-2. Target 分支 选择默认分支 harmony（请确保变更已通过测试、代码检查和合入了默认分支）
+2. Target 分支 选择默认分支 sig（请确保变更已通过测试、代码检查和合入了默认分支）
 
-3. Release 描述按以下格式：
+3. Release 描述按以下格式（具体的版本信息以自测时的版本为准）：
 
 ```md
 [Fixes]:
@@ -114,9 +115,7 @@ example：
 
 ### 添加别名
 
-由于当前版本设置组织名后，会导致设置别名的库无法被找到，所以展示不需要设置别名。
-
-~~在 `package.json` 里添加 "harmony" 字段：~~
+在 `package.json` 里添加 "harmony" 字段：
 
 ```json
 // 暂不配置
@@ -127,9 +126,11 @@ example：
 }
 ```
 
-~~RNOH 的打包工具会识别出 `node_modules` 下第一级目录的所有 RNOH 三方库的别名（第二级目录暂不支持，已提 issue），这样在 JS 端 import 三方库使用的时候，可以使用原库的名字。如 import xxx from "@react-native-community/slider"。~~
+RNOH 的打包工具会识别出 `node_modules` 下所有 RNOH 三方库的别名，这样在 JS 端 import 三方库使用的时候，可以使用原库的名字。如 import xxx from "@react-native-community/slider"。
 
 ### 发布 npm 包
+
+> [!WARNING] 需通过测试验收后，才能进行此步！
 
 #### 将私有 NPM 包托管到 Github Packages
 

@@ -55,7 +55,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 **对于 JS 代码：**仅保留有改动的部分，其余直接从原库里 import。
 
-首先需要在 github 仓库上新增 sig 分支，作为补丁版本的分支。sig 分支的建立规则和 harmony 分支一致，具体请参考 [开源管理](zh-cn/open-source.md) 章节
+首先需要在 github 仓库上新增 sig 分支（若不存在），作为补丁版本的分支。sig 分支的具体建立规则请参考 [开源管理](zh-cn/open-source.md) 章节
 
 > [!WARNING] 目录结构还是需要和原库保持一致！
 

@@ -331,7 +331,7 @@ namespace rnoh {
 #### **CalculatorTurboModule.cpp**
 
 ```cpp
-#include "RTNCalculatorTurboModule.h"
+#include "CalculatorTurboModule.h"
 #include "RNOH/ArkTSTurboModule.h"
 
 using namespace rnoh;
@@ -356,7 +356,7 @@ RTNCalculatorTurboModule::RTNCalculatorTurboModule(const ArkTSTurboModule::Conte
 
 ```cpp
 #include "RNOH/Package.h"
-#include "RTNCalculatorTurboModule.h"
+#include "CalculatorTurboModule.h"
 
 using namespace rnoh;
 using namespace facebook;

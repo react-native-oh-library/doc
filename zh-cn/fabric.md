@@ -756,7 +756,30 @@ export struct RTNCenteredText {
 
 <!-- tabs:end -->
 
-该部分是 RTNCenteredText 的 HarmonyOS 原生实现。
+
+ <!-- tabs:start -->
+
+#### **RTNCenteredPackage.ts**
+
+```ts
+import { RNPackage } from '@rnoh/react-native-openharmony/ts';
+import type {
+  DescriptorWrapperFactoryByDescriptorTypeCtx,
+  DescriptorWrapperFactoryByDescriptorType
+} from '@rnoh/react-native-openharmony/ts';
+import { RNC } from "@rnoh/react-native-openharmony/generated/ts"
+
+export class RTNCenteredTextPackage extends RNPackage {
+  createDescriptorWrapperFactoryByDescriptorType(ctx: DescriptorWrapperFactoryByDescriptorTypeCtx): DescriptorWrapperFactoryByDescriptorType {
+    return {
+      [RNC.RTNCenteredText.NAME]: (ctx) => new RNC.RTNCenteredText.DescriptorWrapper(ctx.descriptor)
+    }
+  }
+}
+
+```
+
+<!-- tabs:end -->
 
 创建 `ts.ts`
 

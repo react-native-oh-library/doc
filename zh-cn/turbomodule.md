@@ -13,7 +13,7 @@ Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 
 创建一个 Turbo Native Module 分为以下步骤：
 
 1. 声明 JavaScript 接口类型；
-2. 编写脚手架代码（Android 和 iOS 平台可以通过 Codegen 生成）；
+2. 配置模块以支持 Codegen 自动生成脚手架代码；
 3. 编写原生代码完成模块实现。
 
 接下来会创建一个简单的名为 `RTNCalculator` 的 TurboModule 作为示例。
@@ -23,7 +23,8 @@ Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 
 我们按照一般的三方库目录结构来配置:
 
 ```md
-.
+TurboModulesGuide
+├── MyApp
 └── RTNCalculator
     ├── android（Android 的原生实现代码）
     ├── ios（iOS 的原生实现代码）
@@ -83,13 +84,15 @@ export default TurboModuleRegistry.get<Spec>("RTNCalculator") as Spec | null;
 
 最后，调用 `TurboModuleRegistry.get` 并传入模块名，它将在 Turbo Native Module 可用的时候进行加载。
 
+将 js 声明文件放入 `src` 文件夹下。
+
+> [!TIP] 当我们在编写 JavaScript 代码时，如果没有配置好对应的模块或依赖安装，就从第三方库导入类型，可能会使的您的 IDE 不能正确载入导入声明，从而显示错误或警告。这种情况是正常的，它不会在您添加模块到 App 的时候出现问题。
+
 ### 3. Codegen 配置
 
 接下来，需要为 Codegen 和自动链接添加一些配置。Codegen 的作用是生成 C++ 脚手架代码，负责串联 JS 和原生侧。
 
-有一些配置文件在 Android/iOS 平台是通用的，而有的仅能在某一平台使用。
-
-HarmonyOS 平台暂时不支持 Codegen，TurboModule 的 C++ 代码需要自行编写。
+有一些配置文件在 Android/iOS/HarmonyOS 平台是通用的，而有的仅能在某一平台使用。
 
 #### Shared
 
@@ -97,53 +100,68 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 
 ```json
 {
-  "name": "rtn-calculator",
-  "version": "0.0.1",
-  "description": "Add numbers with TurboModules",
-  "react-native": "src/index",
-  "source": "src/index",
-  "files": [
-    "src",
-    "android",
-    "ios",
-    "harmony",
-    "rtn-calculator.podspec",
-    "!android/build",
-    "!ios/build",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__"
-  ],
-  "keywords": ["react-native", "ios", "android", "harmony"],
-  "repository": "https://github.com/<your_github_handle>/rtn-calculator",
-  "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/<your_github_handle>/rtn-calculator/issues"
-  },
-  "homepage": "https://github.com/<your_github_handle>/rtn-calculator#readme",
-  "devDependencies": {},
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
-  },
-  "codegenConfig": {
-    "name": "RTNCalculatorSpec",
-    "type": "modules",
-    "jsSrcsDir": "src",
-    "android": {
-      "javaPackageName": "com.rtncalculator"
+    "name": "rtn-calculator",
+    "version": "0.0.1",
+    "description": "Add numbers with TurboModules",
+    "react-native": "src/index",
+    "source": "src/index",
+    "files": [
+      "src",
+      "android",
+      "ios",
+      "harmony",
+      "rtn-calculator.podspec",
+      "!android/build",
+      "!ios/build",
+      "!**/__tests__",
+      "!**/__fixtures__",
+      "!**/__mocks__"
+    ],
+    "keywords": ["react-native", "ios", "android", "harmony"],
+    "repository": "https://github.com/<your_github_handle>/rtn-calculator",
+    "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/<your_github_handle>/rtn-calculator/issues"
+    },
+    "homepage": "https://github.com/<your_github_handle>/rtn-calculator#readme",
+    "devDependencies": {},
+    "peerDependencies": {
+      "react": "*",
+      "react-native": "*"
+    },
+    "harmony": {
+      "codegenConfig": {
+        "specPaths": [
+          "./src"
+        ]
+      }
+    },
+    "codegenConfig": {
+      "name": "RTNCalculatorSpec",
+      "type": "modules",
+      "jsSrcsDir": "src",
+      "android": {
+        "javaPackageName": "com.rtncalculator"
+      }
     }
   }
-}
+  
 ```
 
-将 Codegen 的配置声明到 codegenConfig 字段。codegenConfig 是一个用于存放要生成的第三方库的对象数组，每个对象又包含其它三个字段：
+将 Codegen 的 Android 和 iOS 配置声明到 codegenConfig 字段，HarmonyOS 配置到 harmony.codegenConfig 字段。
+
+Android 和 iOS 的 codegenConfig 是一个用于存放要生成的第三方库的对象数组，每个对象又包含其它三个字段：
 
 - name：第三方库的名称。按照惯例，名称应以 Spec 为结尾
+
 - type：在这个 npm 包里的模块类型。在本例中，我们开发的是 Turbo Native Module，所以值为 modules
+
 - jsSrcsDir：用于找到 js 接口声明文件的相对路径，它将被 Codegen 解析
+
 - android.javaPackageName：由 Codegen 生成的 Java 包名 (需与 AndroidManifest.xml 中包名一致)
+
+HarmonyOS 的 codegenConfig 字段只需要配置 js 接口声明文件的相对路径。
 
 #### Android
 
@@ -152,7 +170,8 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
 1. 带有 Codegen 配置信息的 build.gradle 文件
 2. AndroidManifest.xml
 3. 一个实现 ReactPackage 接口的 Java 类
-   在文件创建完成后，android 目录文件结构应该是这样的：
+
+在文件创建完成后，android 目录文件结构应该是这样的：
 
 ```md
 android
@@ -268,120 +287,28 @@ Codegen 会在 App 编译的时候自动运行。
 
 #### HarmonyOS
 
-> [!tip] 待完善能力：因为 HarmonyOS 平台暂时不支持 Codegen，也不能复用安卓的 C++ 代码，所以这部分需要自行编写和添加。
+HarmonyOS 需要在 RN 工程中通过运行脚本运行 Codegen。
 
-在 `harmony/rtn-calculator/src/main/cpp` 目录下创建： `CMakeLists.txt`，`CalculatorPacakge.h`，`CalculatorTurboModule.h`，`CalculatorTurboModule.cpp`。
+打开 RN 工程下的 package.json，如 `MyApp/package.json`，添加：
 
-```md
-harmony
-└── rtn-calculator
-    ├── src
-    │   └── main
-    │       ├── cpp
-    │       │   ├── CalculatorPacakge.h
-    │       │   ├── CMakeLists.txt
-    │       │   ├── CalculatorTurboModule.cpp
-    │       │   └── CalculatorTurboModule.h
-    │       ├──ets
-    │       └── modules.json5         
-    ├── build-profile.json5
-    ├── hvigorfile.ts
-    ├── index.ets
-    ├── oh-package.json5
-    └── ts.ts
-```
-
-<!-- tabs:start -->
-
-#### **CMakeLists.txt**
-
-```cmake
-# the minimum version of CMake
-cmake_minimum_required(VERSION 3.13)
-set(CMAKE_VERBOSE_MAKEFILE on)
-
-file(GLOB rnoh_calculator_SRC CONFIGURE_DEPENDS *.cpp)
-add_library(rnoh_calculator SHARED ${rnoh_calculator_SRC})
-target_include_directories(rnoh_calculator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(rnoh_calculator PUBLIC rnoh)
-```
-
-<!-- tabs:end -->
-
-<!-- tabs:start -->
-
-#### **CalculatorTurboModule.h**
-
-```cpp
-# pragma once
-# include "RNOH/ArkTSTurboModule.h"
-
-namespace rnoh {
-  class JSI_EXPORT RTNCalculatorTurboModule : public ArkTSTurboModule {
-    public:
-      RTNCalculatorTurboModule(const ArkTSTurboModule::Context ctx, const std::string name);
-  };
-} // namespace rnoh
-```
-
-<!-- tabs:end -->
-
-<!-- tabs:start -->
-
-#### **CalculatorTurboModule.cpp**
-
-```cpp
-#include "CalculatorTurboModule.h"
-#include "RNOH/ArkTSTurboModule.h"
-
-using namespace rnoh;
-using namespace facebook;
-
-static jsi::Value __hostFunction_RTNCalculatorTurboModule_add(jsi::Runtime &rt, react::TurboModule, const jsi::Value *args, size_t count) {
-  return static_cast<ArkTSTurboModule &>(turboModule).callAsync(rt, "add", args, count);
-}
-
-RTNCalculatorTurboModule::RTNCalculatorTurboModule(const ArkTSTurboModule::Context ctx, const std::string name) : ArkTSTurboModule(ctx, name) {
-  methodMap_["add"] = MethodMetadata{2, __hostFunction_RTNCalculatorTurboModule_add};
+```json
+{
+  ...
+  "scripts": {
+    ...
+    "codegen": "react-native codegen-harmony --rnoh-module-path ./harmony/react_native_openharmony"
+  },
+  ...
 }
 ```
 
-<!-- tabs:end -->
+> codegen-harmony 参数介绍：
 
-通过 `RNOH/Package.h` 来导出 CalculatorPackage
+1. --rnoh-module-path: 指定 rnoh OHOS 模块的相对路径，用于存储生成的 ts 文件；如果使用 har 包引入 rnoh 模块，则需要指向：./harmony/entry/oh_modules/@rnoh/react-native-openharmony"
 
-<!-- tabs:start -->
+2. --cpp-output-path: 指定用于存储生成的 C++ 文件的输出目录的相对路径，默认 ./harmony/entry/src/main/cpp/generated；
 
-#### **CalculatorPacakge.h**
-
-```cpp
-#include "RNOH/Package.h"
-#include "CalculatorTurboModule.h"
-
-using namespace rnoh;
-using namespace facebook;
-class NativeRTNCalculatorFactoryDelegate : public TurboModuleFactoryDelegate {
-  public:
-    SharedTurboModule createTurboModule(Context ctx, const std::string &name) const override {
-      if (name == "RTNCalculator") {
-        return std::make_shared<RTNCalculatorTurboModule>(ctx, name);
-      }
-      return nullptr;
-    }
-}
-
-namespace rnoh {
-  class CalculatorPackage : public Package {
-    public:
-      CalculatorPackage(Package::Context ctx) : Package(ctx) {}
-      std::unique_ptr<TurboModuleFactoryDelegate> createTurboModuleFactoryDelegate() override {
-        return std::make_unique<NativeRTNCalculatorFactoryDelegate>();
-      }
-  };
-} // namespace rnoh
-```
-
-<!-- tabs:end -->
+3. --project-root-path: 包根目录的相对路径。
 
 ### 4. 原生代码
 
@@ -517,21 +444,18 @@ HarmonyOS 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 
 1. 创建用于实现模块的 CalculatorModule.ts
 2. 创建 CalculatorPackage.ts
-3. 创建 index.ets 和 ts.ts
-4. 修改 oh-package.json5，hvigorfile.ts，module.json5
+3. 创建用于导出模块的 index.ets 和 ts.ts
+4. 创建 oh-package.json5，hvigorfile.ts，module.json5
 
-HarmonyOS 第三方库目录文件结构应为如下：
+> [!TIP] 可以在 DevEco Studio 中通过 File -> New -> Module.. -> Static Lirbrary 创建空壳模块，以此为基础修改文件内容
+
+HarmonyOS 第三方库原生代码文件结构应为如下：
 
 ```md
 harmony
-└── rtn-calculator
+└── calculator
     ├── src
     │   └── main
-    │       ├── cpp
-    │       │   ├── CalculatorPacakge.h
-    │       │   ├── CMakeLists.txt
-    │       │   ├── CalculatorTurboModule.cpp
-    │       │   └── CalculatorTurboModule.h
     │       ├──ets
     │       │   ├── CalculatorModule.ts
     │       │   └── CalculatorPackage.ts
@@ -550,12 +474,13 @@ harmony
 #### **CalculatorModule.ts**
 
 ```ts
-import { TurboModule } from "rnoh/ts";
+import { TurboModule } from '@rnoh/react-native-openharmony/ts';
+import { TM } from "@rnoh/react-native-openharmony/generated/ts"
 
-export class CalculatorModule extends TurboModule {
-  add(a: number, b: number): Promise<number> {
-    return new Promise((resolve) => resolve(a + b));
-  }
+export class CalculatorModule extends TurboModule implements TM.RTNCalculator.Spec {
+    add(a: number, b: number): Promise<number> {
+        return new Promise((resolve) => resolve(a + b));
+      }
 }
 ```
 
@@ -570,20 +495,27 @@ export class CalculatorModule extends TurboModule {
 #### **CalculatorPackage.ts**
 
 ```ts
-import { RNPackage, TurboModulesFactory } from 'rnoh/ts;
-import type { TurboModule, TurboModuleContext } from 'rnoh/ts';
+import {
+  RNPackage,
+  TurboModulesFactory,
+} from "@rnoh/react-native-openharmony/ts";
+import type {
+  TurboModule,
+  TurboModuleContext,
+} from "@rnoh/react-native-openharmony/ts";
+import { TM } from "@rnoh/react-native-openharmony/generated/ts";
 import { CalculatorModule } from './CalculatorModule';
 
 class CalculatorModulesFactory extends TurboModulesFactory {
   createTurboModule(name: string): TurboModule | null {
-    if (name === 'RTNCalculator') {
-      return new CalculatorModule(this.ctx)
+    if (name === TM.RTNCalculator.NAME) {
+      return new CalculatorModule(this.ctx);
     }
     return null;
   }
 
   hasTurboModule(name: string): boolean {
-    return name === 'RTNCalculator';
+    return name === TM.RTNCalculator.NAME;
   }
 }
 
@@ -592,6 +524,7 @@ export class CalculatorPackage extends RNPackage {
     return new CalculatorModulesFactory(ctx);
   }
 }
+
 ```
 
 <!-- tabs:end -->
@@ -621,7 +554,7 @@ export * from "./ts";
 
 <!-- tabs:end -->
 
-修改 `oh-package.json5`，`hvigorfile.ts`，`module.json5`
+修改 `oh-package.json5`，`hvigorfile.ts`，`module.json5`，或自行创建
 
  <!-- tabs:start -->
 
@@ -629,13 +562,19 @@ export * from "./ts";
 
 ```json
 {
+  "license": "ISC",
+  "types": "",
   "devDependencies": {
-    "rnoh": "file:../rnoh"
   },
-  "name": "rnoh-calculator",
+  "name": "rtn-calculator",
+  "description": "",
   "main": "index.ets",
-  "type": "module"
+  "version": "0.0.1",
+  "dependencies": {
+    "@rnoh/react-native-openharmony": "file:../react_native_openharmony"
+  }
 }
+
 ```
 
 <!-- tabs:end -->
@@ -656,11 +595,11 @@ export { harTasks } from "@ohos/hvigor-ohos-plugin";
 
 ```json
 {
-  "module": {
-    "name": "calculator",
-    "type": "har",
-    "deviceType": ["default"]
-  }
+  module: {
+    name: 'calculator',
+    type: 'har',
+    deviceTypes: ['default'],
+  },
 }
 ```
 
@@ -670,11 +609,41 @@ export { harTasks } from "@ohos/hvigor-ohos-plugin";
 
 #### Shared
 
-首先，需要将包含模块的 NPM 包添加到 App。可以使用以下命令执行此操作：
+首先，需要将包含模块的 NPM 包添加到 App。请确保 package.json 已经配置安装好以下依赖：
+
+```json
+{
+  ...
+  "dependencies": {
+    "react-native-harmony": "版本 >= 0.72.15",
+    ...
+  },
+  "overrides": {
+    "@react-native/codegen": "0.74.0"
+  },
+  ...
+}
+```
+
+执行以下操作，假设 MyApp 为您的 App 工程路径
 
 ```bash
-cd tester
-yarn add ../RTNCalculator
+// 进入模块工程
+cd RTNCalculator
+
+// 打包模块
+npm pack
+
+// 进入 App 工程
+cd ../MyApp
+
+// 本地路径安装模块
+npm i file:../RTNCalculator/rtn-calculator-0.0.1.tgz
+
+// 执行以下命令执行 codegen (HarmonyOS only)
+
+npm run codegen
+
 ```
 
 此命令会将 RTNCalculator 模块添加到 App 内的 node_modules 目录。
@@ -694,86 +663,59 @@ yarn add ../RTNCalculator
 
 ##### 引入原生端代码
 
-打开 `entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
+目前 HarmonyOS 工程暂不支持引入工程外的模块，所以需要手动将模块的 HarmonyOS 源码复制到工程内。
+
+复制 `RTNCalculator/harmony/calculator` 到 `harmony` 工程根目录下。
+
+修改 `MyApp/harmony/build-profile.json5`，在 modules 字段添加：
+
+```json
+{
+...
+  modules: [
+    ...
+    {
+      name: 'calculator',
+      srcPath: './calculator',
+    }
+  ]
+}
+```
+
+打开 `MyApp/harmony/entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
 
 ```json
 "dependencies": {
-    "rnoh": "file:../rnoh",
-    "rnoh-calculator": "file:../../node_modules/RTNCalculator/harmony/rtn-calculator"
+  "@rnoh/react-native-openharmony": "file:../react_native_openharmony",
+  "rtn-calculator": "file:../calculator"
   }
 ```
 
-在终端运行以下命令
+点击右上角的 `sync` 按钮同步工程，或在终端运行以下命令
 
 ```bash
 cd entry
-ohpm install --no-link
-```
-
-##### 配置 CMakeLists 和引入 CalculatorPackge
-
-打开 `entry/src/main/cpp/CMakeLists.txt`，添加：
-
-```diff
-project(rnapp)
-cmake_minimum_required(VERSION 3.4.1)
-set(RNOH_APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(OH_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../oh_modules")
-set(RNOH_CPP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../react-native-harmony/harmony/cpp")
-
-add_subdirectory("${RNOH_CPP_DIR}" ./rn)
-
-# RNOH_BEGIN: add_package_subdirectories
-add_subdirectory("../../../../sample_package/src/main/cpp" ./sample-package)
-+ add_subdirectory("${OH_MODULE_DIR}/rnoh-calculator/src/main/cpp" ./calculator)
-# RNOH_END: add_package_subdirectories
-
-add_library(rnoh_app SHARED
-    "./PackageProvider.cpp"
-    "${RNOH_CPP_DIR}/RNOHAppNapiBridge.cpp"
-)
-
-target_link_libraries(rnoh_app PUBLIC rnoh)
-
-# RNOH_BEGIN: link_packages
-target_link_libraries(rnoh_app PUBLIC rnoh_sample_package)
-+ target_link_libraries(rnoh_app PUBLIC rnoh_calculator)
-# RNOH_END: link_packages
-```
-
-打开 `entry/src/main/cpp/PackageProvider.cpp`，添加：
-
-```diff
-#include "RNOH/PackageProvider.h"
-#include "SamplePackage.h"
-+ #include "CalculatorPackage.h"
-
-using namespace rnoh;
-
-std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Context ctx) {
-    return {
-      std::make_shared<SamplePackage>(ctx),
-+     std::make_shared<CalculatorPackage>(ctx)
-    };
-}
+ohpm install
 ```
 
 ##### 在 ArkTs 侧引入 Calculator TurboModule
 
-打开 `entry/src/main/ets/RNPackageFactory.ts`，添加：
+打开 `MyApp/harmony/entry/src/main/ets/RNPackageFactory.ts`，添加：
 
 ```diff
-import {RNPackageContext, RNPackage} from 'rnoh/ts';
+import type {RNPackageContext, RNPackage} from '@rnoh/react-native-openharmony/ts';
 import {SamplePackage} from 'rnoh-sample-package/ts';
-+ import {CalculatorPackage} from 'rnoh-calculator/ts';
++ import { CalculatorPackage } from "rtn-calculator/ts";
 
 export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
   return [
     new SamplePackage(ctx),
-+   new CalculatorPackage(ctx)
++   new CalculatorPackage(ctx),
     ];
 }
 ```
+
+编译、运行即可。
 
 #### JavaScript
 
@@ -795,7 +737,7 @@ import React from "react";
 import { useState } from "react";
 import type { Node } from "react";
 import { SafeAreaView, StatusBar, Text, Button } from "react-native";
-import RTNCalculator from "rtn-calculator/js/NativeCalculator.js";
+import RTNCalculator from "rtn-calculator/src/NativeCalculator.js";
 
 const App: () => Node = () => {
   const [result, setResult] = useState<number | null>(null);
@@ -819,3 +761,5 @@ export default App;
 ```
 
 <!-- tabs:end -->
+
+> [!TIP] 可通过 npm run start 使用热更新

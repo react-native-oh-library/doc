@@ -14,6 +14,8 @@
 
 官网地址：<https://nodejs.org/en/>
 
+> [!WARNING] Node 的版本应大于等于 16，推荐 18
+
 ### 验证安装
 
 输入 node -v，npm -v 输出版本就是安装成功了
@@ -38,42 +40,25 @@ npm install -g yarn
 
 安装完 yarn 之后就可以用 yarn 代替 npm 了，例如用 `yarn` 代替 `npm install` 命令，用 `yarn add 某第三方库名` 代替 `npm install 某第三方库名`。
 
-## 搭建 ios 环境
+## 搭建 iOS 环境
 
-ios 环境主要用于效果比对和 RN Demo 的开发。因为 arkui 对标 swift，<font size="4">**rnoh 也对标 ios**</font>
-，推荐搭建 ios 环境，方便对齐效果。也可以在 ios 环境可以运行 codegen 生成代码。
+iOS 环境主要用于效果比对和 React Native Demo 的开发。因为 ArkUI 对标 SwiftUI，RNOH 也对标 iOS，推荐搭建 iOS 环境，方便对齐效果。也可以在 iOS 环境使用 Codegen 生成代码。
 
 > [!WARNING] 请先参考官方的 React-Naitve + ios 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)。
 
 ## 搭建 Android 环境
 
-搭建 Android 环境，用于效果比对和 RN Demo 的开发和 codegen 生成代码。
+搭建 Android 环境，用于效果比对和 React Native Demo 的开发和使用 Codegen 生成代码。
 
 > [!WARNING] 请先参考官方的 React-Naitve + Android 的环境搭建文档 [React Native Step Up](https://www.reactnative.cn/docs/environment-setup)
 
-将 ios / Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
+将 iOS / Android 环境搭建好，并成功运行 React-Native 官方给定的 demo 后再进行下一步。
 
 ## 搭建 HarmonyOS 环境
 
 ### IDE 和手机版本
 
-HarmonyOS 环境需要注意 IDE 版本、OpenHarmony SDK 版本和手机版本是否符合要求。
-
-- 2023.10.30 版本：
-
-DevEco Studio 版本：4.0.3.601
-
-OpenHarmony(API10): 4.0.10.11
-
-工程机版本：NOH-AN00 204.0.0.65(SP4C00E70R1P12)
-
-- 2023.12.30 版本：
-
-DevEco Studio 版本：4.1.3.401
-
-OpenHarmony(API11): 4.1.0.36
-
-工程机版本：NOH-AN00 204.1.0.60(SP10C00E60R1P17)
+HarmonyOS 环境需要注意 IDE 版本、SDK 版本和手机版本是否符合要求。具体下载地址请咨询 RNOH 接口人。
 
 ### 在 mac 上安装鸿蒙模拟器
 
@@ -85,25 +70,13 @@ OpenHarmony(API11): 4.1.0.36
 
 RNOH 包含的内容：
 
-1. react-native-harmony：react-native 的 Hamrony 拓展；
-2. react-native-harmony-cli：react-native-cli 的 Hamrony 拓展；
-3. tester：配置好 HarmonyOS 支持的 React-Native 项目；
+1. react-native-harmony：react-native 的 HarmonyOS 拓展；
+2. react-native-harmony-cli：react-native-cli 的 HarmonyOS 拓展；
+3. tester：配置好的 HarmonyOS 支持的 React-Native 项目；
 
-- 绿区：
+拉取[rnoh](https://github.com/react-native-openharmony/rnoh)项目，需要授权账号。
 
-拉取[ReactNative_OpenHarmony](https://codehub-g.huawei.com/ReactNativeOpenHarmony/rnoh/home)项目
-
-- 蓝区：
-
-拉取[rnoh](https://github.com/react-native-openharmony/rnoh)项目
-
-按需选择分支：
-
-`swm_main` / `main` 是SWM团队的主干分支；
-
-`master` / `master_green` 是HUAWEI团队的主干分支；
-
-`xxx_third_party` 是在 `xxx` 的基础上，加入了 React-Native 三方库。
+选择 `main` 分支
 
 ## 创建新项目
 
@@ -160,7 +133,6 @@ react-native run-android
 在 `tester` 目录下，运行：
 
 ```sh
-npm run preinstall
 npm i
 ```
 
@@ -175,6 +147,12 @@ npm run dev
 ```
 
 生成的 bundle 会放在 `tester/harmony/entry/src/main/resources/rawfile` 目录下。
+
+或者使用热更新，使用方式和 Android/iOS 一致：
+
+```sh
+npm run start
+```
 
 - 运行
 

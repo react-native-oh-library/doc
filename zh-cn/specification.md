@@ -73,17 +73,11 @@ HarmonyOS React-Native 三方库（以下简称 RNOH 三方库）是 React-Nativ
 
 去掉组织名取后半段：
 
-> "@react-native-oh-library/原包名后半段" // 私仓
-
-> "@react-native-oh-tpl/原包名后半段" // 公仓
+> "@react-native-oh-tpl/原包名后半段"
 
 example：
 
 ```md
-// 私仓
-"@react-native-community/slider" → "@react-native-oh-library/slider"
-
-// 公仓
 "@shopify/flash-list" → "@react-native-oh-tpl/flash-list"
 ```
 
@@ -91,17 +85,11 @@ example：
 
 直接添加新的组织名：
 
-> "@react-native-oh-library/原包名" // 私仓
-
-> "@react-native-oh-tpl/原包名" // 公仓
+> "@react-native-oh-tpl/原包名"
 
 example：
 
 ```md
-// 私仓
-"react-native-translucent-modal" → "@react-native-oh-library/react-native-translucent-modal"
-
-// 公仓
 "react-native-pager-view" → "@react-native-oh-tpl/react-native-pager-view"
 ```
 

@@ -26,13 +26,52 @@ HarmonyOS React-Native 三方库（以下简称 RNOH 三方库）是 React-Nativ
 
 ![branch_rules2](../img/branch_rules2.png)
 
+## commit 规范
+
+在团队协作和开源项目中，遵循统一的 Git commit 规范有助于保持代码库整洁、历史记录清晰，并且方便代码审查和问题追踪。以下是开源社区推荐的最佳实践：
+
+### 使用标准的提交消息格式
+
+#### 标题（header）
+
+标题行是必须的，简洁明了地描述提交的目的，一般不超过 50 个字符。
+
+格式通常为：
+
+`<type>(<scope>): <subject>`
+
+**type** ：表示提交的类别，常见类型包括：
+
+- `feat`：新功能（feature）
+- `fix`：修补 bug
+- `docs`：文档变更
+- `style`：代码格式（不影响代码运行的变动）
+- `refactor`：重构（既不是新增功能，也不是修复 bug 的代码变动）
+- `perf`：优化相关，比如提升性能、体验
+- `test`：增加测试
+- `chore`：构建过程或辅助工具的变动
+- `ci`: 修改集成配置的文件或者脚本
+
+**scope**：表示影响范围（可选），例如模块或文件名。
+
+**subject**：一句话描述这次提交的目的，使用动词开头，如 "Add"，"Fix"，"Update" 等。
+
+#### 示例：
+
+```
+feat(auth): add login functionality
+fix(button): correct hover state on Safari
+docs(readme): update installation instructions
+```
+
 ## 发布规范
 
 发布步骤：
 
 1. 确保已通过自检测试，并完成代码格式检查；
-2. 确保已将变更合入 `sig` 分支；
-3. 发布新的 Tag 和 Release（github 上操作）；
+2. 确保已将变更合入 `sig` 分支
+3. 提交发布相关信息(oh-package 版本、package 版本和 har)，参考 [release commit](https://github.com/react-native-oh-library/react-native-harmony-svg/commit/a35397ff4a030860ca4e9ba8e9646428869c822e).
+4. 发布新的 Tag 和 Release（github 上操作）；
 
 ### 代码格式检查
 
@@ -111,12 +150,22 @@ RNOH 三方库以原库补丁的形式发布（若原库需要鸿蒙化适配，
 
 **HarmonyOS:**
 
+需要删除安卓和 iOS 实现
+
+```
+.
+├── harmony
+├── android // 删除
+├── apple // 删除
+├── ios // 删除
+├── package.json
+```
+
 需要添加别名
 
 在 `package.json` 里添加 "harmony" 字段：
 
 ```json
-// 暂不配置
 {
     "harmony": {
         "alias": {原NPM包名}
@@ -155,7 +204,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 > [!WARNING] 目录结构需要和原库保持一致！
 
-我们要尽量遵循能少改就少改的原则，对于新架构的三方库，剔除了其他平台后，如果 JS 代码无改动，理论上只需要重新在 index 中重新导出即可。若有 harmony 平台的改动，则需要保留。
+我们要尽量遵循**能少改就少改的原则**，对于新架构的三方库，剔除了其他平台后，如果 JS 代码无改动，理论上只需要重新在 index 中重新导出即可。若有 harmony 平台的改动，则需要保留。
 
 平台间的解耦不意味着 npm 包的解耦，实际上 JS 侧还需要依赖原库的代码。
 
@@ -171,6 +220,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 | 原库名                                | 仓库地址                                                                                            |
 | ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| react-native-svg                      | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-harmony-svg)              |
 | react-native-linear-gradient          | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-linear-gradient/tree/sig) |
 | @react-native-community/slider        | [OpenHarmony SIG](https://github.com/react-native-oh-library/react-native-slider/tree/sig)          |
 | @react-native-picker/picker           | [OpenHarmony SIG](https://github.com/react-native-oh-library/picker/tree/sig)                       |

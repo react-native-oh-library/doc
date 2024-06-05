@@ -26,6 +26,10 @@ HarmonyOS React-Native 三方库（以下简称 RNOH 三方库）是 React-Nativ
 
 ![branch_rules2](../img/branch_rules2.png)
 
+将仓库的 issue 功能开启，方便提交和跟踪三方库问题。
+
+![repository_issue](../img/repository_issue.png)
+
 ## commit 规范
 
 在团队协作和开源项目中，遵循统一的 Git commit 规范有助于保持代码库整洁、历史记录清晰，并且方便代码审查和问题追踪。以下是开源社区推荐的最佳实践：

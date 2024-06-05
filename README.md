@@ -29,19 +29,19 @@
   - [Fabric 组件](/zh-cn/fabric.md)
   - [迁移三方库到新架构](/zh-cn/migration.md)
 
-- 鸿蒙原生侧代码
+- 开源管理
 
-  - [C++ NAPI 层](/zh-cn/cpp.md)
-  - [原生层](/zh-cn/native.md)
-
-- 发布
-
-  - [三方库文件结构整改（补丁形式）](/zh-cn/patch.md)
+  - [版本控制](/zh-cn/version-control.md)
+  - [HarmonyOS RN三方库规范](/zh-cn/specification.md)
   - [代码格式检查](/zh-cn/codelint.md)
-  - [开源管理](/zh-cn/open-source.md)
   - [本地打包三方库](/zh-cn/tgz.md)
   - [发布三方库到 Github Packages](/zh-cn/github-package.md)
   - [发布三方库到 NPM 官方仓](/zh-cn/npm.md)
+
+- checklist
+
+  - [发布 release checklist](/zh-cn/repositories-release-checklist.md)
+  - [usage-docs checklist](/zh-cn/usage-docs-checklist.md)
 
 - 其他
 

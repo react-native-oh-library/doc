@@ -22,6 +22,8 @@
 
   - [搭建开发环境](/zh-cn/environment.md)
 
+- 移植策略
+  - [移植策略](/zh-cn/strategy.md)
 - 新架构迁移指南
 
   - [新架构介绍](/zh-cn/new-architecture.md)

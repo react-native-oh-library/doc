@@ -14,21 +14,21 @@ HarmonyOS React-Native 三方库（以下简称 RNOH 三方库）是 React-Nativ
 
 首先确认需要移植的 React-Native 三方库的原始仓库地址，然后 fork 原库的默认分支（一般是 `master` 或 `main`）到 react-native-oh-library 组织。Description 的内容改为这个三方库在 NPM 上的包名。
 
-![create repo](../img/create_repo.png)
+![create repo](../../img/create_repo.png)
 
 点击 "View all branches" 修改分支名称为 `sig`，作为仓库的默认分支。开发时，请另外新建开发分支或 fork 该仓库。
 
-![branch](../img/branch.png)
+![branch](../../img/branch.png)
 
 将 sig 设置为保护分支，只能通过 Pull Request 的形式合入修改。PR 需写清楚合入的修改，后续会自动生成 Release 信息。
 
-![branch_rules1](../img/branch_rules1.png)
+![branch_rules1](../../img/branch_rules1.png)
 
-![branch_rules2](../img/branch_rules2.png)
+![branch_rules2](../../img/branch_rules2.png)
 
 将仓库的 issue 功能开启，方便提交和跟踪三方库问题。
 
-![repository_issue](../img/repository_issue.png)
+![repository_issue](../../img/repository_issue.png)
 
 ## commit 规范
 
@@ -89,7 +89,7 @@ docs(readme): update installation instructions
 
 > x.x.x-y.y.y
 
-具体的版本命名方式请阅读[版本控制](/zh-cn/version-control.md)章节。
+具体的版本命名方式请阅读[版本控制](/zh-cn/deprecated/version-control.md)章节。
 
 2. Target 分支 选择默认分支 sig（请确保变更已通过测试、代码检查和合入了默认分支）
 
@@ -106,7 +106,7 @@ docs(readme): update installation instructions
 
 4. 需要上传本地打包的 tgz 文件
 
-![grn](../img/grn.png)
+![grn](../../img/grn.png)
 
 > [!TIP] Generate release notes 功能会自动根据两个 Tag 之间的异同生成 Release 信息，历史 PR 信息会生成到 What's Changed 下。
 
@@ -234,4 +234,4 @@ import LinearGradient from "react-native-linear-gradient";
 
 ## 版本管理规范
 
-请阅读[版本控制](/zh-cn/version-control.md)章节。
+请阅读[版本控制](/zh-cn/deprecated/version-control.md)章节。

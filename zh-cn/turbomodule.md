@@ -18,6 +18,8 @@ Turbo Modules 是升级版的 Native Modules，是基于 JSI 开发的一套 JS 
 
 接下来会创建一个简单的名为 `RTNCalculator` 的 TurboModule 作为示例。
 
+**该示例仅提供 HarmonyOS 版本，Android/iOS 版本请阅读 React-Native 官方文档的 [TurboModules 章节](https://reactnative.cn/docs/0.73/the-new-architecture/pillars-turbomodules)**
+
 ### 1. 目录配置
 
 我们按照一般的三方库目录结构来配置:
@@ -94,9 +96,9 @@ export default TurboModuleRegistry.get<Spec>("RTNCalculator") as Spec | null;
 
 有一些配置文件在 Android/iOS/HarmonyOS 平台是通用的，而有的仅能在某一平台使用。
 
-#### Shared
+#### 3.1 配置 `package.json` 文件
 
-shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模块时被调用。请在 `RTNCalculator` 的根目录创建 `package.json` 文件。
+请在 `RTNCalculator` 的根目录创建 `package.json` 文件。
 
 ```json
 {
@@ -107,8 +109,6 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
     "source": "src/index",
     "files": [
       "src",
-      "android",
-      "ios",
       "harmony",
       "rtn-calculator.podspec",
       "!android/build",
@@ -117,7 +117,7 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
       "!**/__fixtures__",
       "!**/__mocks__"
     ],
-    "keywords": ["react-native", "ios", "android", "harmony"],
+    "keywords": ["react-native", "harmony"],
     "repository": "https://github.com/<your_github_handle>/rtn-calculator",
     "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
     "license": "MIT",
@@ -136,156 +136,16 @@ shared 是 package.json 文件中的一个配置项，它将在 yarn 安装模�
           "./src"
         ]
       }
-    },
-    "codegenConfig": {
-      "name": "RTNCalculatorSpec",
-      "type": "modules",
-      "jsSrcsDir": "src",
-      "android": {
-        "javaPackageName": "com.rtncalculator"
-      }
     }
   }
   
 ```
 
-将 Codegen 的 Android 和 iOS 配置声明到 codegenConfig 字段，HarmonyOS 配置到 harmony.codegenConfig 字段。
+将 HarmonyOS 配置到 harmony.codegenConfig 字段。
 
-Android 和 iOS 的 codegenConfig 是一个用于存放要生成的第三方库的对象数组，每个对象又包含其它三个字段：
+- specPaths：用于找到 js 接口声明文件的相对路径，它将被 Codegen 解析
 
-- name：第三方库的名称。按照惯例，名称应以 Spec 为结尾
-
-- type：在这个 npm 包里的模块类型。在本例中，我们开发的是 Turbo Native Module，所以值为 modules
-
-- jsSrcsDir：用于找到 js 接口声明文件的相对路径，它将被 Codegen 解析
-
-- android.javaPackageName：由 Codegen 生成的 Java 包名 (需与 AndroidManifest.xml 中包名一致)
-
-HarmonyOS 的 codegenConfig 字段只需要配置 js 接口声明文件的相对路径。
-
-#### Android
-
-若要在 Android 平台运行 Codegen，需要创建三个文件：
-
-1. 带有 Codegen 配置信息的 build.gradle 文件
-2. AndroidManifest.xml
-3. 一个实现 ReactPackage 接口的 Java 类
-
-在文件创建完成后，android 目录文件结构应该是这样的：
-
-```md
-android
-├── build.gradle
-└── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncalculator
-                    └── CalculatorPackage.java
-```
-
-首先，在 `android` 目录创建 `build.gradle` 文件，并配置以下内容：
-
-<!-- tabs:start -->
-
-#### **build.gradle**
-
-```gradle
-buildscript {
-  ext.safeExtGet = {prop, fallback ->
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-  }
-  repositories {
-    google()
-    gradlePluginPortal()
-  }
-  dependencies {
-    classpath("com.android.tools.build:gradle:7.1.1")
-  }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'com.facebook.react'
-
-android {
-  compileSdkVersion safeExtGet('compileSdkVersion', 31)
-}
-
-repositories {
-  maven {
-    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-    url "$projectDir/../node_modules/react-native/android"
-  }
-  mavenCentral()
-  google()
-}
-
-dependencies {
-  implementation 'com.facebook.react:react-native:+'
-}
-```
-
-<!-- tabs:end -->
-
-其次，创建 `android/src/main` 目录，然后在这个目录内创建 `AndroidManifest.xml` 文件，并编写以下代码：
-
-<!-- tabs:start -->
-
-#### **AndroidManifest.xml**
-
-```xml
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.rtncalculator">
-</manifest>
-```
-
-<!-- tabs:end -->
-
-这个 manifest 文件的用途是声明您开发的模块的 Java 包
-
-最后，您需要一个继承 TurboReactPackage 接口的类。在运行 Codegen 前，您不用完整实现这个类。对于 App 而言，一个没有实现接口的空类就已经能当做一个 React Native 依赖，Codegen 会尝试生成其脚手架代码。
-
-创建 `android/src/main/java/com/rtncalculator` 目录，在这个目录内创建 `CalculatorPackage.java` 文件
-
-<!-- tabs:start -->
-
-#### **CalculatorPackage.java**
-
-```java
-package com.rtncalculator;
-
-import androidx.annotation.Nullable;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.module.model.ReactModuleInfoProvider;
-import com.facebook.react.TurboReactPackage;
-
-import java.util.Collections;
-import java.util.List;
-
-public class CalculatorPackage extends TurboReactPackage {
-
-  @Nullable
-  @Override
-  public NativeModule getModule(String name, ReactApplicationContext reactContext) {
-          return null;
-  }
-
-  @Override
-  public ReactModuleInfoProvider getReactModuleInfoProvider() {
-      return null;
-  }
-}
-```
-
-<!-- tabs:end -->
-
-ReactPackage 接口的用途是让 React Native 为使用 App 中的 ViewManager 和 Native Modules，识别出哪些原生类需要在第三方库里导出。
-
-Codegen 会在 App 编译的时候自动运行。
-
-#### HarmonyOS
+#### 3.2 codegen通用配置项
 
 HarmonyOS 需要在 RN 工程中通过运行脚本运行 Codegen。
 
@@ -311,134 +171,6 @@ HarmonyOS 需要在 RN 工程中通过运行脚本运行 Codegen。
 3. --project-root-path: 包根目录的相对路径。
 
 ### 4. 原生代码
-
-#### Android
-
-Android 平台上 Turbo Native Module 的原生代码需执行如下步骤：
-
-1. 创建用于实现模块的 CalculatorModule.java
-2. 修改之前生成的 CalculatorPackage.java
-
-Android 第三方库目录文件结构应为如下：
-
-```md
- android
-├── build.gradle
-└── src
-    └── main
-        ├── AndroidManifest.xml
-        └── java
-            └── com
-                └── rtncalculator
-                    ├── CalculatorModule.java
-                    └── CalculatorPackage.java
-```
-
-创建 CalculatorModule.java
-
-<!-- tabs:start -->
-
-#### **CalculatorModule.java**
-
-```java
-package com.rtncalculator;
-
-import androidx.annotation.NonNull;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-import java.util.Map;
-import java.util.HashMap;
-
-public class CalculatorModule extends NativeCalculatorSpec {
-
-    public static String NAME = "RTNCalculator";
-
-    CalculatorModule(ReactApplicationContext context) {
-        super(context);
-    }
-
-    @Override
-    @NonNull
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public void add(double a, double b, Promise promise) {
-        promise.resolve(a + b);
-    }
-}
-```
-
-<!-- tabs:end -->
-
-这个类实现了模块的功能，它继承了 NativeCalculatorSpec 类，而这个类是之前从 JavaScript 接口声明文件 NativeCalculator 自动生成的。
-
-修改 CalculatorPackage.java
-
-<!-- tabs:start -->
-
-#### **CalculatorPackage.java**
-
-```diff
-package com.rtncalculator;
-
-import androidx.annotation.Nullable;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.ReactApplicationContext;
-+ import com.facebook.react.module.model.ReactModuleInfo;
-import com.facebook.react.module.model.ReactModuleInfoProvider;
-import com.facebook.react.TurboReactPackage;
-
-import java.util.Collections;
-import java.util.List;
-+ import java.util.HashMap;
-+ import java.util.Map;
-
-public class CalculatorPackage extends TurboReactPackage {
-
-  @Nullable
-  @Override
-  public NativeModule getModule(String name, ReactApplicationContext reactContext) {
-+      if (name.equals(CalculatorModule.NAME)) {
-+          return new CalculatorModule(reactContext);
-+      } else {
-          return null;
-+      }
-  }
-
-
-  @Override
-  public ReactModuleInfoProvider getReactModuleInfoProvider() {
--      return null;
-+      return () -> {
-+          final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
-+          moduleInfos.put(
-+                  CalculatorModule.NAME,
-+                  new ReactModuleInfo(
-+                          CalculatorModule.NAME,
-+                          CalculatorModule.NAME,
-+                          false, // canOverrideExistingModule
-+                          false, // needsEagerInit
-+                          true, // hasConstants
-+                          false, // isCxxModule
-+                          true // isTurboModule
-+          ));
-+          return moduleInfos;
-+      };
-  }
-}
-```
-
-<!-- tabs:end -->
-
-这就是 Android 平台原生代码的最后一部分，它定义了 TurboReactPackage 对象，这个对象将用于 App 的模块加载。
-
-#### HarmonyOS
 
 HarmonyOS 平台上 Turbo Native Module 的原生代码需执行如下步骤：
 
@@ -607,7 +339,7 @@ export { harTasks } from "@ohos/hvigor-ohos-plugin";
 
 ### 5. 将 Turbo Native Module 添加到 App
 
-#### Shared
+#### 5.1 配置 RN 工程，执行 codegen
 
 首先，需要将包含模块的 NPM 包添加到 App。请确保 package.json 已经配置安装好以下依赖：
 
@@ -615,7 +347,7 @@ export { harTasks } from "@ohos/hvigor-ohos-plugin";
 {
   ...
   "dependencies": {
-    "react-native-harmony": "版本 >= 0.72.15",
+    "react-native-harmony": "x.x.x",
     ...
   },
   "overrides": {
@@ -648,26 +380,17 @@ npm run codegen
 
 此命令会将 RTNCalculator 模块添加到 App 内的 node_modules 目录。
 
-#### Android
-
-在配置 Android 之前，您需要先开启新架构：
-
-1. 打开 android/gradle.properties；
-2. 滑到文件底部，将 newArchEnabled 的值从 false 修改为 true。
-
-#### HarmonyOS
+#### 5.2 原生工程配置项
 
 > [!tip] 待完善能力：HarmonyOS 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 React-Native 项目里的 HarmonyOS 工程 `harmony`
 
-##### 引入原生端代码
-
 目前 HarmonyOS 工程暂不支持引入工程外的模块，所以需要手动将模块的 HarmonyOS 源码复制到工程内。
 
-复制 `RTNCalculator/harmony/calculator` 到 `harmony` 工程根目录下。
+- 复制 `RTNCalculator/harmony/calculator` 到 `harmony` 工程根目录下。
 
-修改 `MyApp/harmony/build-profile.json5`，在 modules 字段添加：
+- 修改 `MyApp/harmony/build-profile.json5`，在 modules 字段添加：
 
 ```json
 {
@@ -682,23 +405,34 @@ npm run codegen
 }
 ```
 
-打开 `MyApp/harmony/entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
+- 在工程根目录的 `MyApp/harmony/oh-package.json5` 添加 overrides 字段
+
+```json
+{
+  ...
+  "overrides": {
+    "@rnoh/react-native-openharmony" : "./react_native_openharmony.har" // RNOH SDK har包路径或源码路径
+  }
+}
+```
+
+- 打开 `MyApp/harmony/entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
 
 ```json
 "dependencies": {
-  "@rnoh/react-native-openharmony": "file:../react_native_openharmony",
+  "@rnoh/react-native-openharmony": "file:../react_native_openharmony.har",  // RNOH SDK har包路径或源码路径
   "rtn-calculator": "file:../calculator"
   }
 ```
 
-点击右上角的 `sync` 按钮同步工程，或在终端运行以下命令
+- 点击右上角的 `sync` 按钮同步工程，或在终端运行以下命令
 
 ```bash
 cd entry
 ohpm install
 ```
 
-##### 在 ArkTs 侧引入 Calculator TurboModule
+#### 5.3 在 ArkTs 侧引入 Calculator TurboModule
 
 打开 `MyApp/harmony/entry/src/main/ets/RNPackageFactory.ts`，添加：
 
@@ -717,7 +451,7 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
 
 编译、运行即可。
 
-#### JavaScript
+#### 5.4 JavaScript
 
 以下是一个在 App.js 中调用 add 方法的例子：
 
@@ -761,5 +495,7 @@ export default App;
 ```
 
 <!-- tabs:end -->
+
+现在，您可以运行 App 并查看在屏幕上显示的组件。
 
 > [!TIP] 可通过 npm run start 使用热更新

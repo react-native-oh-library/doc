@@ -20,7 +20,7 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
 
 **该示例仅提供 HarmonyOS 版本，Android/iOS 版本请阅读 React-Native 官方文档的 [Fabric 组件章节](https://reactnative.cn/docs/the-new-architecture/pillars-fabric-components)**
 
-## 目录配置
+### 1. 目录配置
 
 同样的，我们按照一般的三方库目录结构来配置:
 
@@ -34,7 +34,7 @@ Fabric 组件是一种使用 Fabric 渲染器渲染并展示在屏幕上的 UI �
     └── src （js/ts代码）
 ```
 
-### 1. 声明 JavaScript 接口
+### 2. 声明 JavaScript 接口
 
 新架构要求必须使用强类型风格语言声明 JavaScript 接口（Flow 和 TypeScript 皆可）。Codegen 会根据这些接口声明来生成强类型的语言，其中包括 C++、Objective-C 和 Java。
 
@@ -99,9 +99,9 @@ export default codegenNativeComponent<NativeProps>(
 
 在声明文件的最后部分，导出了泛型函数 `codegenNativeComponent` 的返回值，此函数需要传递组件的名称。
 
-### 2. Codegen 配置
+### 3. Codegen 配置
 
-#### 2.1 配置 `package.json` 文件
+#### 3.1 配置 `package.json` 文件
 
 请在 `RTNCenteredText` 的根目录创建 `package.json` 文件。
 
@@ -119,7 +119,7 @@ export default codegenNativeComponent<NativeProps>(
     "!**/__fixtures__",
     "!**/__mocks__"
   ],
-  "keywords": ["react-native", "ios", "android", "harmony"],
+  "keywords": ["react-native", "harmony"],
   "repository": "https://github.com/<your_github_handle>/rtn-centered-text",
   "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
   "license": "MIT",
@@ -131,13 +131,11 @@ export default codegenNativeComponent<NativeProps>(
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
-  },
+  }
 }
 ```
 
-
-
-#### 2.2 选择 Fabric 的原生实现方式，配置 codegen
+#### 3.2 选择 Fabric 的原生实现方式，配置 codegen
 
 RNOH 有特殊的架构限制，需要开发者在开发前根据需求选择好使用 ArkTS API 还是 CAPI 实现 Fabric。
 
@@ -152,7 +150,7 @@ RNOH 有特殊的架构限制，需要开发者在开发前根据需求选择好
 
 在 `package.json` 中新增 harmony.codegenConfig 字段：
 
-##### Option1: HarmonyOS (ArkTS Fabric)
+##### Option1: ArkTS API 实现 Fabric
 
 ```json
 {
@@ -166,7 +164,7 @@ RNOH 有特殊的架构限制，需要开发者在开发前根据需求选择好
 }
 ```
 
-##### Option2: HarmonyOS (CAPI Fabric)
+##### Option2: C-API 实现 Fabric
 
 ```json
 {
@@ -180,7 +178,7 @@ RNOH 有特殊的架构限制，需要开发者在开发前根据需求选择好
 }
 ```
 
-##### 2.3 codegen通用配置项
+#### 3.3 codegen通用配置项
 
 HarmonyOS 需要在 RN 工程中通过运行脚本来执行 Codegen。
 
@@ -205,9 +203,9 @@ HarmonyOS 需要在 RN 工程中通过运行脚本来执行 Codegen。
 
 3. --project-root-path: 包根目录的相对路径。
 
-### 3. 实现原生组件
+### 4. 实现原生组件
 
-#### 3.1 Option1: 使用 ArkTS API 实现原生组件
+#### Option1: 使用 ArkTS API 实现原生组件
 
 HarmonyOS 平台中 ArkTS 版本的 Fabric 组件的原生代码必须包含以下三个部分：
 
@@ -339,7 +337,7 @@ export * from "./src/main/ets/RTNCenteredText";
 
 <!-- tabs:end -->
 
-#### 3.2 Option2: 使用 C-API 实现原生组件
+#### Option2: 使用 C-API 实现原生组件
 
 HarmonyOS 平台中 C-API 版本的 Fabric 组件的原生代码必须包含以下部分：
 
@@ -489,7 +487,7 @@ public:
 
 <!-- tabs:end -->
 
-#### 3.3 ArkTS Fabric 和 C-API Fabric 共有部分
+#### ArkTS Fabric 和 C-API Fabric 共有部分
 
 修改 `oh-package.json5`，`hvigorfile.ts`，`module.json5`，或自行创建
 
@@ -540,9 +538,9 @@ export { harTasks } from "@ohos/hvigor-ohos-plugin";
 
 <!-- tabs:end -->
 
-### 4. 将 Fabric 组件添加到 App
+### 5. 将 Fabric 组件添加到 App
 
-#### 4.1 配置 RN 工程，执行 codegen
+#### 5.1 配置 RN 工程，执行 codegen
 
 首先，需要将包含模块的 NPM 包添加到 App。请确保 package.json 已经配置安装好以下依赖：
 
@@ -575,7 +573,7 @@ cd ../MyApp
 // 本地路径安装模块
 npm i file:../RTNCenteredText/rtn-centered-text-0.0.1.tgz
 
-// 执行以下命令执行 codegen
+// 执行以下命令执行 codegen (HarmonyOS only)
 
 npm run codegen
 
@@ -583,7 +581,7 @@ npm run codegen
 
 此命令会将 RTNCenteredText 模块添加到 App 内的 node_modules 目录。
 
-### 4.2 原生工程配置项
+#### 5.2 原生工程配置项
 
 > [!tip] 待完善能力：HarmonyOS 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
@@ -591,9 +589,9 @@ npm run codegen
 
 目前 HarmonyOS 工程暂不支持引入工程外的模块，所以需要手动将模块的 HarmonyOS 源码复制到工程内。
 
-复制 `RTNCenteredText/harmony/centered_text` 到 `harmony` 工程根目录下。
+- 复制 `RTNCenteredText/harmony/centered_text` 到 `harmony` 工程根目录下。
 
-修改 `MyApp/harmony/build-profile.json5`，在 modules 字段添加：
+- 修改 `MyApp/harmony/build-profile.json5`，在 modules 字段添加：
 
 ```json
 {
@@ -608,7 +606,7 @@ npm run codegen
 }
 ```
 
-在工程根目录的 `MyApp/harmony/oh-package.json5` 添加 overrides 字段
+- 在工程根目录的 `MyApp/harmony/oh-package.json5` 添加 overrides 字段
 
 ```json
 {
@@ -619,7 +617,7 @@ npm run codegen
 }
 ```
 
-打开 `MyApp/harmony/entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
+- 打开 `MyApp/harmony/entry/oh-package.json5`，添加以下依赖，引入鸿蒙原生端的代码
 
 ```json
 "dependencies": {
@@ -628,14 +626,14 @@ npm run codegen
   }
 ```
 
-点击右上角的 `sync` 按钮同步工程，或在终端运行以下命令
+- 点击右上角的 `sync` 按钮同步工程，或在终端运行以下命令
 
 ```bash
 cd entry
 ohpm install
 ```
 
-#### 4.2.1 ArkTS 组件特有配置项
+##### 5.2.1 ArkTS 组件特有配置项
 
 打开 `MyApp/harmony/entry/src/main/ets/pages/Index.ets`，添加：
 
@@ -675,7 +673,7 @@ export function createRNPackages(ctx: RNPackageContext): RNPackage[] {
 
 编译、运行即可。
 
-#### 4.2.1 C-API 组件特有配置项
+##### 5.2.2 C-API 组件特有配置项
 
 打开 `MyApp/harmony/entry/src/main/cpp/CMakeLists.txt`，添加：
 
@@ -735,7 +733,7 @@ std::vector<std::shared_ptr<Package>> PackageProvider::getPackages(Package::Cont
 
 编译、运行即可。
 
-### 4.3 JavaScript
+#### 5.3 JavaScript
 
 最后，操作以下步骤，您就可以在 JavaScript 调用组件了。
 
@@ -784,3 +782,5 @@ export default App;
 <!-- tabs:end -->
 
 现在，您可以运行 App 并查看在屏幕上显示的组件。
+
+> [!TIP] 可通过 npm run start 使用热更新

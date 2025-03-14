@@ -51,7 +51,7 @@
 ```json
 "devDependencies": {
   "react-native-harmony-cli": "npm:@react-native-oh/react-native-harmony-cli@^0.0.27",
-  "@react-native-community/cli": "11.3.6"
+  "@react-native-community/cli": "11.4.1"
 },
 ```
 
@@ -413,8 +413,6 @@ npm i file:../RTNCenteredText/rtn-centered-text-0.0.1.tgz
 此命令会将 RTNCenteredText 模块安装到 exampleApp 工程， 您可以在 `node_modules/rtn-centered-text` 目录找到相关文件。
 
 #### 3.2 原生工程配置项
-
-> [!tip] 待完善能力：HarmonyOS 平台目前暂时不支持 AutoLink，所以需要自行配置。
 
 首先使用 DevEco Studio 打开 exampleApp 项目里的鸿蒙工程 `harmony`
 
